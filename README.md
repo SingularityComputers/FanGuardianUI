@@ -37,9 +37,10 @@ PlatformIO offers an option to compile and upload the firmware directly to the b
 
 ## UI screens
 
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/37f0c1e2-c72a-41da-88fd-0fbfe8bb5cbe">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/02b5bed2-5fda-42d1-aa43-e18aacfdf77b">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/a7ba725c-f092-4f7a-b772-50047392a263">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/d046df13-8a60-4c12-a802-dcc1ae6be6e5">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/c253d8d4-6149-4c74-bf37-d04a263e0d4a">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/d92a85fe-fc9e-4a42-b89d-f0f019938f59">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/49cb2f33-4fb3-4519-8604-bae2f654e1e9">
 
 # License and copyrights
