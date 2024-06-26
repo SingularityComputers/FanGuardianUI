@@ -310,26 +310,52 @@ void readTEMPs() {
     for(int i = 0; i < NUMBER_OF_TEMPS; i++) {
       rawValue = ads.readADC_SingleEnded(i);
       voltage = ads.computeVolts(rawValue);
-      resistance = (voltage / (THERMISTOR_VREF - voltage)) * NOMINAL_RESISTANCE;
 
-      temps[i] = resistance / NOMINAL_RESISTANCE;
-      temps[i] = log(temps[i]);
-      temps[i] /= B_COEFFICIENT;
-      temps[i] += 1.0 / (NOMINAL_TEMPERATURE + 273.15);
-      temps[i] = 1.0 / temps[i];
-      temps[i] -= 273.15;
+      // do not measure near boundaries
+      if ((voltage > 0.8) && (voltage < 4.0)) {
+        resistance = (voltage / (THERMISTOR_VREF - voltage)) * NOMINAL_RESISTANCE;
+        temps[i] = resistance / NOMINAL_RESISTANCE;
+        temps[i] = log(temps[i]);
+        temps[i] /= B_COEFFICIENT;
+        temps[i] += 1.0 / (NOMINAL_TEMPERATURE + 273.15);
+        temps[i] = 1.0 / temps[i];
+        temps[i] -= 273.15;
+      } else {
+        temps[i] = -273.15;
+      }
     }
   }
 }
 
 /* screenUpdater updates screen widget properties */
 void screenUpdater() {
-  lv_label_set_text_fmt(ui_ValueT1, "%.1f", temps[0]);
-  lv_label_set_text_fmt(ui_ValueT2, "%.1f", temps[1]);
-  lv_label_set_text_fmt(ui_Temp3Value, "%.1f", temps[2]);
-  lv_label_set_text_fmt(ui_Temp4Value, "%.1f", temps[3]);
-  lv_arc_set_value(ui_ArcT1, temps[0]);
-  lv_arc_set_value(ui_ArcT2, temps[1]);
+  if (temps[0] > 0.0) {
+    lv_obj_clear_flag(ui_PanelT1, LV_OBJ_FLAG_HIDDEN);
+    lv_label_set_text_fmt(ui_ValueT1, "%.1f", temps[0]);
+    lv_arc_set_value(ui_ArcT1, temps[0]);
+  } else {
+    lv_obj_add_flag(ui_PanelT1, LV_OBJ_FLAG_HIDDEN);
+  }
+
+  if (temps[1] > 0.0) {
+    lv_obj_clear_flag(ui_PanelT2, LV_OBJ_FLAG_HIDDEN);
+    lv_label_set_text_fmt(ui_ValueT2, "%.1f", temps[1]);
+    lv_arc_set_value(ui_ArcT2, temps[1]);
+  } else {
+    lv_obj_add_flag(ui_PanelT2, LV_OBJ_FLAG_HIDDEN);
+  }
+
+  if (temps[2] > 0.0) {
+    lv_label_set_text_fmt(ui_Temp3Value, "%.1f", temps[2]);
+  } else {
+    lv_label_set_text(ui_Temp3Value, "--");
+  }
+
+  if (temps[3] > 0.0) {
+    lv_label_set_text_fmt(ui_Temp4Value, "%.1f", temps[3]);
+  } else {
+    lv_label_set_text(ui_Temp4Value, "--");
+  }
 
   lv_label_set_text_fmt(ui_ValueFan1, "%d", fanRPMs[0]);
   lv_arc_set_value(ui_ArcFan1, fanRPMs[0]);

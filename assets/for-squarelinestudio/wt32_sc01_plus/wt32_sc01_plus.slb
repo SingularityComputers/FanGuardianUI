@@ -12,7 +12,7 @@
     "offset_x": 0,
     "offset_y": 0,
     "rotation": 0,
-    "color_depth": "16 sw",
+    "color_depth": "16",
     "lvgl_export_path": "",
     "lvgl_include_path": "lvgl.h",
     "supported_lvgl_version": "8.3.11",
