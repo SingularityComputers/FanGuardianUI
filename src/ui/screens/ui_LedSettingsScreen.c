@@ -231,7 +231,7 @@ lv_obj_set_y( ui_NumOfLEDs, 95 );
 lv_obj_set_align( ui_NumOfLEDs, LV_ALIGN_CENTER );
 if ("0123456789"=="") lv_textarea_set_accepted_chars(ui_NumOfLEDs, NULL);
 else lv_textarea_set_accepted_chars(ui_NumOfLEDs, "0123456789");
-lv_textarea_set_max_length(ui_NumOfLEDs,2);
+lv_textarea_set_max_length(ui_NumOfLEDs,3);
 lv_textarea_set_placeholder_text(ui_NumOfLEDs,"8");
 lv_textarea_set_one_line(ui_NumOfLEDs,true);
 lv_obj_set_style_pad_left(ui_NumOfLEDs, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
