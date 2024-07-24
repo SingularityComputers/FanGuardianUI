@@ -14,7 +14,7 @@ extern Preferences preferences;
 extern "C" {
 #endif
 
-#define MAXIMUM_NUMBER_OF_LEDS 32
+#define MAXIMUM_NUMBER_OF_LEDS 120
 #define NUMBER_OF_FANS 4
 extern CRGB leds[MAXIMUM_NUMBER_OF_LEDS];
 extern uint8_t value_r;
@@ -25,7 +25,7 @@ volatile extern uint16_t fanAlertRPMs[NUMBER_OF_FANS];
 extern lv_color_hsv_t alert_color;
 extern uint8_t rgb_pattern_index;
 extern bool rgb_led_alert_enabled;
-extern uint8_t rgb_led_count;
+extern uint16_t rgb_led_count;
 
 #ifdef __cplusplus
 } /*extern "C"*/

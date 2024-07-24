@@ -389,10 +389,10 @@ void loadSettingsFromNVFlash() {
   lv_label_set_text(ui_BlueSliderValue, label_text);
   rgb_stripe_color = lv_color_make(value_r, value_g, value_b);
   lv_obj_set_style_bg_color(ui_LedRGB, rgb_stripe_color, LV_PART_MAIN);
-	fanAlertRPMs[0] = preferences.getUShort("fan_1_alert", 5000);
-  fanAlertRPMs[1] = preferences.getUShort("fan_2_alert", 5000);
-  fanAlertRPMs[2] = preferences.getUShort("fan_3_alert", 5000);
-  fanAlertRPMs[3] = preferences.getUShort("fan_4_alert", 5000);
+	fanAlertRPMs[0] = preferences.getUShort("fan_1_alert", 0);
+  fanAlertRPMs[1] = preferences.getUShort("fan_2_alert", 0);
+  fanAlertRPMs[2] = preferences.getUShort("fan_3_alert", 0);
+  fanAlertRPMs[3] = preferences.getUShort("fan_4_alert", 0);
   snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[0]));
   lv_textarea_set_text(ui_Fan1Min, label_text);
   snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[1]));
@@ -412,7 +412,7 @@ void loadSettingsFromNVFlash() {
     lv_obj_clear_state(ui_EnableLedAlert, LV_STATE_CHECKED);
   }
   rgb_led_count = preferences.getUChar("rgb_led_count", 32);
-  snprintf(label_text, sizeof(label_text), "%d", static_cast<uint8_t>(rgb_led_count));
+  snprintf(label_text, sizeof(label_text), "%d", static_cast<uint16_t>(rgb_led_count));
   lv_textarea_set_text(ui_NumOfLEDs, label_text);
   preferences.end();
 }

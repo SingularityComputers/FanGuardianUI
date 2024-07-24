@@ -11,7 +11,7 @@ volatile uint16_t fanAlertRPMs[NUMBER_OF_FANS] = {0,0,0,0};
 lv_color_hsv_t alert_color;
 uint8_t rgb_pattern_index = 0;
 bool rgb_led_alert_enabled = false;
-uint8_t rgb_led_count = 32;
+uint16_t rgb_led_count = 32;
 
 void colorslider_event_cb(lv_event_t * e)
 {
@@ -100,10 +100,10 @@ void num_of_leds_event_cb(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    rgb_led_count = static_cast<uint8_t>(atoi(lv_textarea_get_text(ui_NumOfLEDs)));
-    if (rgb_led_count > 32) {
-      rgb_led_count = 32;
-      lv_textarea_set_text(ui_NumOfLEDs, "32");
+    rgb_led_count = static_cast<uint16_t>(atoi(lv_textarea_get_text(ui_NumOfLEDs)));
+    if (rgb_led_count > 120) {
+      rgb_led_count = 120;
+      lv_textarea_set_text(ui_NumOfLEDs, "120");
     }
   }
 }
