@@ -10,9 +10,10 @@
 extern "C" {
 #endif
 
-void colorslider_event_cb(lv_event_t * e);
 void led_effect_dropdown_event_cb(lv_event_t * e);
 void num_of_leds_event_cb(lv_event_t * e);
+void colorslider_event_cb(lv_event_t * e);
+void temp_sensor_dropdown_event_cb(lv_event_t * e);
 void SaveLedSettings(lv_event_t * e);
 void colorwheel_event_cb(lv_event_t * e);
 void led_alert_event_cb(lv_event_t * e);

@@ -89,8 +89,14 @@ void ui_event_NextButton( lv_event_t * e);
 lv_obj_t *ui_NextButton;
 void ui_event_NextLabel( lv_event_t * e);
 lv_obj_t *ui_NextLabel;
-lv_obj_t *ui_RGBStripePanel;
 lv_obj_t *ui_RGBPanelTitle;
+lv_obj_t *ui_LEDEffectLabel;
+void ui_event_LEDEffectDropdown( lv_event_t * e);
+lv_obj_t *ui_LEDEffectDropdown;
+lv_obj_t *ui_NumOfLEDsLabel;
+void ui_event_NumOfLEDs( lv_event_t * e);
+lv_obj_t *ui_NumOfLEDs;
+lv_obj_t *ui_RGBStripePanel;
 void ui_event_RedSlider( lv_event_t * e);
 lv_obj_t *ui_RedSlider;
 void ui_event_GreenSlider( lv_event_t * e);
@@ -100,13 +106,10 @@ lv_obj_t *ui_BlueSlider;
 lv_obj_t *ui_RedSliderValue;
 lv_obj_t *ui_GreenSliderValue;
 lv_obj_t *ui_BlueSliderValue;
-lv_obj_t *ui_LedRGB;
-lv_obj_t *ui_LEDEffectLabel;
-void ui_event_LEDEffectDropdown( lv_event_t * e);
-lv_obj_t *ui_LEDEffectDropdown;
-lv_obj_t *ui_NumOfLEDsLabel;
-void ui_event_NumOfLEDs( lv_event_t * e);
-lv_obj_t *ui_NumOfLEDs;
+lv_obj_t *ui_TempSensorSelectorPanel;
+lv_obj_t *ui_TempSensorListLabel;
+void ui_event_TempSensorListDropdown( lv_event_t * e);
+lv_obj_t *ui_TempSensorListDropdown;
 void ui_event_BackButton( lv_event_t * e);
 lv_obj_t *ui_BackButton;
 void ui_event_BackLabel( lv_event_t * e);
@@ -185,7 +188,7 @@ const lv_img_dsc_t *ui_imgset_pbdisplay[1] = {&ui_img_pbdisplay3_png};
 void ui_event_LogoScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_LOADED) {
-      _ui_screen_change( &ui_IntermediateBlack, LV_SCR_LOAD_ANIM_FADE_ON, 500, 1500, &ui_IntermediateBlack_screen_init);
+      _ui_screen_change( &ui_IntermediateBlack, LV_SCR_LOAD_ANIM_NONE, 500, 1500, &ui_IntermediateBlack_screen_init);
 }
 }
 void ui_event_IntermediateBlack( lv_event_t * e) {
@@ -232,6 +235,25 @@ if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AlertSettingsScreen_screen_init);
 }
 }
+void ui_event_LEDEffectDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      led_effect_dropdown_event_cb( e );
+}
+}
+void ui_event_NumOfLEDs( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_FOCUSED) {
+      _ui_flag_modify( ui_LEDSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+      _ui_keyboard_set_target(ui_LEDSettingsScreenKB,  ui_NumOfLEDs);
+}
+if ( event_code == LV_EVENT_DEFOCUSED) {
+      _ui_flag_modify( ui_LEDSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      num_of_leds_event_cb( e );
+}
+}
 void ui_event_RedSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
@@ -250,23 +272,10 @@ if ( event_code == LV_EVENT_VALUE_CHANGED) {
       colorslider_event_cb( e );
 }
 }
-void ui_event_LEDEffectDropdown( lv_event_t * e) {
+void ui_event_TempSensorListDropdown( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      led_effect_dropdown_event_cb( e );
-}
-}
-void ui_event_NumOfLEDs( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_FOCUSED) {
-      _ui_flag_modify( ui_LEDSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
-      _ui_keyboard_set_target(ui_LEDSettingsScreenKB,  ui_NumOfLEDs);
-}
-if ( event_code == LV_EVENT_DEFOCUSED) {
-      _ui_flag_modify( ui_LEDSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-}
-if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      num_of_leds_event_cb( e );
+      temp_sensor_dropdown_event_cb( e );
 }
 }
 void ui_event_BackButton( lv_event_t * e) {

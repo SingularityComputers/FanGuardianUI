@@ -1,4 +1,5 @@
-#include "helpers.h"
+#include "led_functions.h"
+#include "fanguardian_common.h"
 #include "ui.h"
 #include "lvgl.h"
 
@@ -10,6 +11,7 @@ uint8_t value_b = 127;
 volatile uint16_t fanAlertRPMs[NUMBER_OF_FANS] = {0,0,0,0};
 lv_color_hsv_t alert_color;
 uint8_t rgb_pattern_index = 0;
+uint8_t rgb_pattern_temp_sensor_index = 0;
 bool rgb_led_alert_enabled = false;
 uint16_t rgb_led_count = 32;
 
@@ -22,9 +24,6 @@ void colorslider_event_cb(lv_event_t * e)
     value_r = lv_slider_get_value(ui_RedSlider);
     value_g = lv_slider_get_value(ui_GreenSlider);
     value_b = lv_slider_get_value(ui_BlueSlider);
-
-    rgb_stripe_color = lv_color_make(value_r, value_g, value_b);
-    lv_obj_set_style_bg_color(ui_LedRGB, rgb_stripe_color, LV_PART_MAIN);
 
     snprintf(label_text, sizeof(label_text), "%d", value_r);
     lv_label_set_text(ui_RedSliderValue, label_text);
@@ -54,6 +53,7 @@ void SaveLedSettings(lv_event_t * e)
   preferences.putUChar("value_g", value_g);
   preferences.putUChar("value_b", value_b);
   preferences.putUChar("pattern", rgb_pattern_index);
+  preferences.putUChar("sensor_index", rgb_pattern_temp_sensor_index);
   preferences.putUChar("rgb_led_count", rgb_led_count);
   preferences.end();
 }
@@ -91,6 +91,7 @@ void led_effect_dropdown_event_cb(lv_event_t * e)
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
     rgb_pattern_index = lv_dropdown_get_selected(ui_LEDEffectDropdown);
+    led_setting_screen_dynamic_ui_events();
   }
 }
 
@@ -105,5 +106,15 @@ void num_of_leds_event_cb(lv_event_t * e)
       rgb_led_count = 120;
       lv_textarea_set_text(ui_NumOfLEDs, "120");
     }
+  }
+}
+
+void temp_sensor_dropdown_event_cb(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t * target = lv_event_get_target(e);
+
+  if (event_code == LV_EVENT_VALUE_CHANGED) {
+    rgb_pattern_temp_sensor_index = lv_dropdown_get_selected(ui_TempSensorListDropdown);
   }
 }

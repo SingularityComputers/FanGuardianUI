@@ -1,4 +1,5 @@
-#include "helpers.h"
+#include <led_functions.h>
+#include <fanguardian_common.h>
 #include <Wire.h>
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
@@ -253,6 +254,9 @@ void setup() {
   // load user settings from NVRAM
   loadSettingsFromNVFlash();
 
+  // set initial state of ui elements
+  led_setting_screen_dynamic_ui_events();
+
   // set pointers of ui_ArcFan objects
   ui_rpm_arcs[0] = ui_ArcFan1;
   ui_rpm_arcs[1] = ui_ArcFan2;
@@ -387,8 +391,6 @@ void loadSettingsFromNVFlash() {
   lv_label_set_text(ui_GreenSliderValue, label_text);
   snprintf(label_text, sizeof(label_text), "%d", value_b);
   lv_label_set_text(ui_BlueSliderValue, label_text);
-  rgb_stripe_color = lv_color_make(value_r, value_g, value_b);
-  lv_obj_set_style_bg_color(ui_LedRGB, rgb_stripe_color, LV_PART_MAIN);
 	fanAlertRPMs[0] = preferences.getUShort("fan_1_alert", 0);
   fanAlertRPMs[1] = preferences.getUShort("fan_2_alert", 0);
   fanAlertRPMs[2] = preferences.getUShort("fan_3_alert", 0);
@@ -405,6 +407,8 @@ void loadSettingsFromNVFlash() {
   lv_colorwheel_set_hsv(ui_Colorwheel2, alert_color);
   rgb_pattern_index = preferences.getUChar("pattern",0);
   lv_dropdown_set_selected(ui_LEDEffectDropdown, rgb_pattern_index);
+  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 0);
+  lv_dropdown_set_selected(ui_TempSensorListDropdown, rgb_pattern_temp_sensor_index);
   rgb_led_alert_enabled = preferences.getBool("led_alert", false);
   if (rgb_led_alert_enabled) {
     lv_obj_add_state(ui_EnableLedAlert, LV_STATE_CHECKED);
@@ -590,29 +594,40 @@ void ledController() {
     ledPatternSolidAlerting(leds, rgb_led_count, currentMillis);
   } else {
     switch (rgb_pattern_index) {
-      case 0:
+      case 0: {
         ledPatternSolid(leds, rgb_led_count);
         break;
-      case 1:
-        ledPatternRainbow(leds, rgb_led_count);
-        vTaskDelay(pdMS_TO_TICKS(20));
-        FastLED.show();
-        break;
-      case 2:
+      }
+      case 1: {
         ledPatternAurora(leds, rgb_led_count);
         vTaskDelay(pdMS_TO_TICKS(50));
         FastLED.show();
         break;
-      case 3:
+      }
+      case 2: {
+        ledPatternRainbow(leds, rgb_led_count);
+        vTaskDelay(pdMS_TO_TICKS(20));
+        FastLED.show();
+        break;
+      }
+      case 3: {
         ledPatternSolidFade(leds, rgb_led_count);
         vTaskDelay(pdMS_TO_TICKS(5));
         FastLED.show();
         break;
-      case 4:
+      }
+      case 4: {
+        ledPatternTemperature(leds, rgb_led_count, temps[rgb_pattern_temp_sensor_index]);
+        vTaskDelay(pdMS_TO_TICKS(50));
+        FastLED.show();
+        break;
+      }
+      case 5: {
         ledPatternTwinkle(leds, rgb_led_count);
         vTaskDelay(pdMS_TO_TICKS(5));
         FastLED.show();
         break;
+      }
     }
   }
 }
