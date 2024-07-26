@@ -13,13 +13,7 @@
 void ui_LogoScreen_screen_init(void);
 void ui_event_LogoScreen( lv_event_t * e);
 lv_obj_t *ui_LogoScreen;
-lv_obj_t *ui_Image3;
-
-
-// SCREEN: ui_IntermediateBlack
-void ui_IntermediateBlack_screen_init(void);
-void ui_event_IntermediateBlack( lv_event_t * e);
-lv_obj_t *ui_IntermediateBlack;
+lv_obj_t *ui_SCLogo;
 
 
 // SCREEN: ui_MainScreen
@@ -188,13 +182,7 @@ const lv_img_dsc_t *ui_imgset_pbdisplay[1] = {&ui_img_pbdisplay3_png};
 void ui_event_LogoScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_LOADED) {
-      _ui_screen_change( &ui_IntermediateBlack, LV_SCR_LOAD_ANIM_NONE, 500, 1500, &ui_IntermediateBlack_screen_init);
-}
-}
-void ui_event_IntermediateBlack( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_SCREEN_LOADED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_NONE, 0, 500, &ui_MainScreen_screen_init);
+      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_NONE, 0, 1500, &ui_MainScreen_screen_init);
 }
 }
 void ui_event_PanelAmbient1( lv_event_t * e) {
@@ -412,7 +400,6 @@ lv_disp_t *dispp = lv_disp_get_default();
 lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), false, LV_FONT_DEFAULT);
 lv_disp_set_theme(dispp, theme);
 ui_LogoScreen_screen_init();
-ui_IntermediateBlack_screen_init();
 ui_MainScreen_screen_init();
 ui_LedSettingsScreen_screen_init();
 ui_AlertSettingsScreen_screen_init();

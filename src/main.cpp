@@ -56,7 +56,7 @@ Adafruit_ADS1115 ads;
 INA3221 ina_0(INA3221_ADDR40_GND);
 
 
-// LVGL class definition
+// LovyanGFX class definition
 class LGFX : public lgfx::LGFX_Device {
   lgfx::Panel_ST7796 _panel_instance;
   lgfx::Bus_Parallel8 _bus_instance;
@@ -187,35 +187,7 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 }
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Board started.");
   initDisplay();
-
-  Serial0.begin(9600);
-  Serial0.flush();
-
-  // Configure Wire library with custom SDA and SCL pins
-  Wire.begin(CUSTOM_SDA_PIN, CUSTOM_SCL_PIN);
-
-  // Initialize the ADS1115
-  if (!ads.begin()) {
-    tft.fillScreen(tft.color565(0, 0, 0));      // Clear the screen
-    tft.setTextColor(tft.color565(255, 0, 0));  // Set text color to red
-    tft.setTextSize(1);                         // Set text size
-    tft.setCursor(0, 0);                        // Print text to the top-left corner
-    tft.print("ERROR: ADS1115 initialization failed!");
-    isADSFailed = true;
-    delay(10000);
-  }
-  ads.setGain(GAIN_ONE);
-
-  // Initialize INA3221
-  ina_0.begin(&Wire);
-  ina_0.reset();
-  ina_0.setShuntRes(100, 100, 100);
-
-  // Initialize WS2812B
-  initLED();
 
   uint32_t DISP_BUF_SIZE = 480 * 320;
   lv_color_t* buf1 = (lv_color_t*)malloc(DISP_BUF_SIZE * sizeof(lv_color_t));
@@ -239,6 +211,7 @@ void setup() {
   indev_drv.read_cb = my_touchpad_read;
   lv_indev_drv_register(&indev_drv);
 
+  // call UI screen initializations
   ui_init();
 
   // create custom keyboard map
@@ -250,6 +223,36 @@ void setup() {
   static const lv_btnmatrix_ctrl_t kb_ctrlx[] = {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
   lv_keyboard_set_map(ui_LEDSettingsScreenKB, LV_KEYBOARD_MODE_USER_1, kb_mapx, kb_ctrlx);
   lv_keyboard_set_map(ui_AlertSettingsScreenKB, LV_KEYBOARD_MODE_USER_1, kb_mapx, kb_ctrlx);
+
+  // init peripherials
+  Serial.begin(9600);
+  Serial.println("Board started.");
+  Serial0.begin(9600);
+  Serial0.flush();
+
+  // Configure Wire library with custom SDA and SCL pins
+  Wire.begin(CUSTOM_SDA_PIN, CUSTOM_SCL_PIN);
+
+  // Initialize the ADS1115
+  if (!ads.begin()) {
+    tft.setBrightness(255);                     // turn on backlight
+    tft.fillScreen(tft.color565(0, 0, 0));      // Clear the screen
+    tft.setTextColor(tft.color565(255, 0, 0));  // Set text color to red
+    tft.setTextSize(1);                         // Set text size
+    tft.setCursor(0, 0);                        // Print text to the top-left corner
+    tft.print("ERROR: ADS1115 initialization failed!");
+    isADSFailed = true;
+    delay(10000);
+  }
+  ads.setGain(GAIN_ONE);
+
+  // Initialize INA3221
+  ina_0.begin(&Wire);
+  ina_0.reset();
+  ina_0.setShuntRes(100, 100, 100);
+
+  // Initialize WS2812B
+  initLED();
 
   // load user settings from NVRAM
   loadSettingsFromNVFlash();
@@ -268,6 +271,11 @@ void setup() {
   ui_rpm_labels[1] = ui_ValueFan2;
   ui_rpm_labels[2] = ui_ValueFan3;
   ui_rpm_labels[3] = ui_ValueFan4;
+
+  // turn on backlight after all screen initializations done
+  // this will hide garbage from framebuffer
+  tft.setBrightness(255);
+
 
   // Create a task to run on Core 0
   xTaskCreatePinnedToCore(core0Task, "ScreenTask", 4096, NULL, 1, NULL, 0);
@@ -289,7 +297,7 @@ void loop() {
 void initDisplay() {
   tft.begin();
   tft.setRotation(1);
-  tft.setBrightness(255);
+  tft.setBrightness(0);   // init with backlight off, this avoids showing framebuffer garbage
 }
 
 /* initLED initializes the RGB leds */
@@ -407,7 +415,7 @@ void loadSettingsFromNVFlash() {
   lv_colorwheel_set_hsv(ui_Colorwheel2, alert_color);
   rgb_pattern_index = preferences.getUChar("pattern",0);
   lv_dropdown_set_selected(ui_LEDEffectDropdown, rgb_pattern_index);
-  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 0);
+  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 3);
   lv_dropdown_set_selected(ui_TempSensorListDropdown, rgb_pattern_temp_sensor_index);
   rgb_led_alert_enabled = preferences.getBool("led_alert", false);
   if (rgb_led_alert_enabled) {
@@ -605,20 +613,20 @@ void ledController() {
         break;
       }
       case 2: {
-        ledPatternRainbow(leds, rgb_led_count);
-        vTaskDelay(pdMS_TO_TICKS(20));
-        FastLED.show();
-        break;
-      }
-      case 3: {
         ledPatternSolidFade(leds, rgb_led_count);
         vTaskDelay(pdMS_TO_TICKS(5));
         FastLED.show();
         break;
       }
+      case 3: {
+        ledPatternRainbow(leds, rgb_led_count);
+        vTaskDelay(pdMS_TO_TICKS(20));
+        FastLED.show();
+        break;
+      }
       case 4: {
         ledPatternTemperature(leds, rgb_led_count, temps[rgb_pattern_temp_sensor_index]);
-        vTaskDelay(pdMS_TO_TICKS(50));
+        vTaskDelay(pdMS_TO_TICKS(5));
         FastLED.show();
         break;
       }

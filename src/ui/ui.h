@@ -20,11 +20,7 @@ extern "C" {
 void ui_LogoScreen_screen_init(void);
 void ui_event_LogoScreen( lv_event_t * e);
 extern lv_obj_t *ui_LogoScreen;
-extern lv_obj_t *ui_Image3;
-// SCREEN: ui_IntermediateBlack
-void ui_IntermediateBlack_screen_init(void);
-void ui_event_IntermediateBlack( lv_event_t * e);
-extern lv_obj_t *ui_IntermediateBlack;
+extern lv_obj_t *ui_SCLogo;
 // SCREEN: ui_MainScreen
 void ui_MainScreen_screen_init(void);
 extern lv_obj_t *ui_MainScreen;

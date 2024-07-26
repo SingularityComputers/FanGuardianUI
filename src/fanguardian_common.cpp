@@ -29,8 +29,10 @@ void led_setting_screen_dynamic_ui_events() {
         break;
       }
       case 2: {
-        lv_obj_t* hide[]= {ui_RGBStripePanel, ui_TempSensorSelectorPanel};
-        toggle_visibility(false, 2, hide);
+        lv_obj_t* show[] = {ui_RGBStripePanel};
+        lv_obj_t* hide[]= {ui_TempSensorSelectorPanel};
+        toggle_visibility(true, 1, show);
+        toggle_visibility(false, 1, hide);
         break;
       }
       case 3: {

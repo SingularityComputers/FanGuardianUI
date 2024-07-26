@@ -106,21 +106,21 @@ void ledPatternSolidFade(CRGB* leds, byte led_count) {
 }
 
 // the Celsius ranges to apply transient colors
-#define MIN_TEMP 25
-#define MAX_TEMP 45
+#define MIN_TEMP 25.0
+#define MAX_TEMP 45.0
 void ledPatternTemperature(CRGB* leds, byte led_count, float temperature) {
-  int truncatedTemp = (int)temperature;
-
-  // ensure the temperature is within the expected range
-  truncatedTemp = constrain(truncatedTemp, MIN_TEMP, MAX_TEMP);
+  temperature = constrain(temperature, MIN_TEMP, MAX_TEMP);
 
   // map the temperature to the color range
-  float ratio = (float)(truncatedTemp - MIN_TEMP) / (MAX_TEMP - MIN_TEMP);
+  float ratio = (float)(temperature - MIN_TEMP) / (MAX_TEMP - MIN_TEMP);
 
   // calculate the RGB values for the color gradient from blue to red
   uint8_t red = ratio * 255;
   uint8_t blue = (1 - ratio) * 255;
-  fill_solid(leds, led_count, CRGB(red, 0, blue));
+
+  for (int i = 0; i < led_count; i++) {
+    leds[i] = blend(leds[i], CRGB(red, 0, blue), 16);  // Adjust blend amount for smoothness
+  }
 }
 
 
