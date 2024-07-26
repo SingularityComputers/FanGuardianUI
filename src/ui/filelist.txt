@@ -1,5 +1,4 @@
 screens/ui_LogoScreen.c
-screens/ui_IntermediateBlack.c
 screens/ui_MainScreen.c
 screens/ui_LedSettingsScreen.c
 screens/ui_AlertSettingsScreen.c

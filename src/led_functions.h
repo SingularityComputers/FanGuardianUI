@@ -1,7 +1,5 @@
-// helpers.h - header of helper functions
-
-#ifndef _HELPERS_H
-#define _HELPERS_H
+#ifndef _LED_FUNCTIONS_H
+#define _LED_FUNCTIONS_H
 
 #include <stdint.h>
 #include "ui/ui.h"
@@ -24,6 +22,7 @@ extern lv_color_t rgb_stripe_color;
 volatile extern uint16_t fanAlertRPMs[NUMBER_OF_FANS];
 extern lv_color_hsv_t alert_color;
 extern uint8_t rgb_pattern_index;
+extern uint8_t rgb_pattern_temp_sensor_index;
 extern bool rgb_led_alert_enabled;
 extern uint16_t rgb_led_count;
 
@@ -39,6 +38,7 @@ void ledPatternRainbow(CRGB* leds, byte led_count);
 void ledPatternSolid(CRGB* leds, byte led_count);
 void ledPatternSolidFade(CRGB* leds, byte led_count);
 void ledPatternSolidAlerting(CRGB* leds, byte led_count, unsigned long currentMillis);
+void ledPatternTemperature(CRGB* leds, byte led_count, float temperature);
 CRGB fadeTowardColor(CRGB& cur, const CRGB& target, uint8_t amount);
 
 #endif

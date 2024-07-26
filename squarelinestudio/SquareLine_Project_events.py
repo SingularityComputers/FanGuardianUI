@@ -26,3 +26,7 @@ def led_alert_event_cb(event_struct):
 def SaveAlertSettings(event_struct):
     return
 
+
+def temp_sensor_dropdown_event_cb(event_struct):
+    return
+

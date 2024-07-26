@@ -1,6 +1,6 @@
-// helpers.h - header of helper functions
+#include "led_functions.h"
 
-#include "helpers.h"
+#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 
 Preferences preferences;
 CRGB leds[MAXIMUM_NUMBER_OF_LEDS];
@@ -104,6 +104,25 @@ void ledPatternSolidFade(CRGB* leds, byte led_count) {
   fill_solid(leds, led_count, CRGB(value_r, value_g, value_b) % brightness);
   FastLED.show();
 }
+
+// the Celsius ranges to apply transient colors
+#define MIN_TEMP 25.0
+#define MAX_TEMP 45.0
+void ledPatternTemperature(CRGB* leds, byte led_count, float temperature) {
+  temperature = constrain(temperature, MIN_TEMP, MAX_TEMP);
+
+  // map the temperature to the color range
+  float ratio = (float)(temperature - MIN_TEMP) / (MAX_TEMP - MIN_TEMP);
+
+  // calculate the RGB values for the color gradient from blue to red
+  uint8_t red = ratio * 255;
+  uint8_t blue = (1 - ratio) * 255;
+
+  for (int i = 0; i < led_count; i++) {
+    leds[i] = blend(leds[i], CRGB(red, 0, blue), 16);  // Adjust blend amount for smoothness
+  }
+}
+
 
 unsigned long previousRGBBlink = 0;
 bool isLedOn = false;
