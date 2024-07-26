@@ -9,7 +9,7 @@ This device seamlessly integrates into your PC setup, providing a centralized hu
 - **Touch Screen Interface:** Equipped with an intuitive touch screen interface, the _FanGuardian_ provides a user-friendly experience, making it easy to access and interpret real-time data at a glance.
 - **Display sensor values:** Check your key PC sensors in real-time, such as motherboard voltages, water and ambient temperatures and FAN speed values.
 - **Configurable FAN speed alerts:** Configure alerting tresholds for every kind of FANs or water pumps. If the RPM drops below the treshold _FanGuardian_ will alert.
-- **Control your RGB stripe:** Control your RGB LED stripe from the touch display. You can set solid color pattern or choose an animation effect from the list. Also when FAN alert treshold is reached, the RGB stripe will blink with a color you configured.
+- **Control your RGB stripe:** Control your RGB LED stripe from the touch display. You can set solid color pattern or choose an animation effect from the list. There is "Aurora" which simulates the Northern Lights, but you can set a simple color fade or twinkle effect, or the classic rainbow which is quite popular among PC modders. One of the coolest pattern is "Temperature effect", which reads the temperature sensor values and sets the RGB stripe color between blue and red, depending on the selected temperature source. Also when FAN alert treshold is reached, the RGB stripe will blink with a color you configured.
 
 # Getting started
 The FanGuardianUI firmware is written in C++. The GUI was designed in [SquareLineStudio](https://squareline.io/downloads). If you want to do any modification, we suggest to use [Microsoft Visual Studio Code](https://code.visualstudio.com/) with PlatformIO extension.
@@ -31,19 +31,17 @@ PlatformIO offers an option to compile and upload the firmware directly to the b
 
 <img width="294" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/0f5bf2d7-2a6c-4a3e-9121-6d0f9215244b">
 
-
-***Note: The SquareLineStudio project files are coming soon...***
-
-
 ## UI screens
 
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/37f0c1e2-c72a-41da-88fd-0fbfe8bb5cbe">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/02b5bed2-5fda-42d1-aa43-e18aacfdf77b">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/c253d8d4-6149-4c74-bf37-d04a263e0d4a">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/0a96e52c-17b6-48fc-83c7-27093a7b3c94">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/ed324759-8f8b-4ec7-aa1a-dc539e0a3c9c">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/d92a85fe-fc9e-4a42-b89d-f0f019938f59">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/49cb2f33-4fb3-4519-8604-bae2f654e1e9">
 
 # License and copyrights
+
 All intellectual property rights and copyrights pertaining to this software are attributed to their respective authors.
 
 As we are committed to our customers and to the PC modding community, we have decided to opensource our firmwares to encourage and inspire the community to create something new and better together.
