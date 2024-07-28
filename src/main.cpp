@@ -276,7 +276,6 @@ void setup() {
   // this will hide garbage from framebuffer
   tft.setBrightness(255);
 
-
   // Create a task to run on Core 0
   xTaskCreatePinnedToCore(core0Task, "ScreenTask", 4096, NULL, 1, NULL, 0);
 
@@ -413,9 +412,9 @@ void loadSettingsFromNVFlash() {
   lv_textarea_set_text(ui_Fan4Min, label_text);
   alert_color = unpackHSV(preferences.getUInt("alert_color", 25700));
   lv_colorwheel_set_hsv(ui_Colorwheel2, alert_color);
-  rgb_pattern_index = preferences.getUChar("pattern",0);
+  rgb_pattern_index = preferences.getUChar("pattern",3);
   lv_dropdown_set_selected(ui_LEDEffectDropdown, rgb_pattern_index);
-  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 3);
+  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 0);
   lv_dropdown_set_selected(ui_TempSensorListDropdown, rgb_pattern_temp_sensor_index);
   rgb_led_alert_enabled = preferences.getBool("led_alert", false);
   if (rgb_led_alert_enabled) {
