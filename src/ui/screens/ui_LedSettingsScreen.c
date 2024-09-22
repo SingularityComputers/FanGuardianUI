@@ -9,7 +9,8 @@ void ui_LedSettingsScreen_screen_init(void)
 {
 ui_LedSettingsScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_LedSettingsScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_img_src( ui_LedSettingsScreen, &ui_img_pbdisplay3_png, LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_LedSettingsScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_LedSettingsScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_NextButton = lv_btn_create(ui_LedSettingsScreen);
 lv_obj_set_width( ui_NextButton, 100);

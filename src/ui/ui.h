@@ -167,7 +167,6 @@ extern lv_obj_t *ui_BackLabel1;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_sclogosmall_png);   // assets/sclogosmall.png
-LV_IMG_DECLARE( ui_img_pbdisplay3_png);   // assets/pbdisplay3.png
 
 
 

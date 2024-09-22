@@ -7,7 +7,6 @@ SET(SOURCES screens/ui_LogoScreen.c
     components/ui_comp_hook.c
     ui_helpers.c
     ui_events.cpp
-    images/ui_img_sclogosmall_png.c
-    images/ui_img_pbdisplay3_png.c)
+    images/ui_img_sclogosmall_png.c)
 
 add_library(ui ${SOURCES})

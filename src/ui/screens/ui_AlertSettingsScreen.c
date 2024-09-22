@@ -9,7 +9,8 @@ void ui_AlertSettingsScreen_screen_init(void)
 {
 ui_AlertSettingsScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_AlertSettingsScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_img_src( ui_AlertSettingsScreen, &ui_img_pbdisplay3_png, LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_AlertSettingsScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_AlertSettingsScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_TresholdsPanel = lv_obj_create(ui_AlertSettingsScreen);
 lv_obj_set_width( ui_TresholdsPanel, 194);
