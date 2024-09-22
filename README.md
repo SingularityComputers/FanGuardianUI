@@ -31,14 +31,23 @@ PlatformIO offers an option to compile and upload the firmware directly to the b
 
 <img width="294" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/0f5bf2d7-2a6c-4a3e-9121-6d0f9215244b">
 
-## UI screens
+### Building binary
+Download esptool to your computer (from https://github.com/espressif/esptool/releases), run PlatformIO binary build (ie. from the VSCode GUI) and run this command to combine the different parts into one binary. (Note, that you have to set the proper path to your PlatformIO project library)
 
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/37f0c1e2-c72a-41da-88fd-0fbfe8bb5cbe">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/02b5bed2-5fda-42d1-aa43-e18aacfdf77b">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/0a96e52c-17b6-48fc-83c7-27093a7b3c94">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/ed324759-8f8b-4ec7-aa1a-dc539e0a3c9c">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/d92a85fe-fc9e-4a42-b89d-f0f019938f59">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/49cb2f33-4fb3-4519-8604-bae2f654e1e9">
+`./esptool --chip esp32s3 merge_bin -o fanguardian-ui.bin --flash_mode dio --flash_size 16MB 0x0 ./.pio/build/WT32-SC01-PLUS/bootloader.bin 0x8000 ./.pio/build/WT32-SC01-PLUS/partitions.bin 0x10000 ./.pio/build/WT32-SC01-PLUS/firmware.bin`
+
+You can then flash the firmware to you display board using the following command:
+
+`./esptool write_flash 0x0 fanguardian-ui.bin`
+
+## UI screens
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/565388af-4420-4a40-874d-8f526e4a5dbf">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/89e66e2e-313f-4793-98c6-9a6d68aaa6e5">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/3901f1e0-2dd5-4fe1-bc60-bc20fc52e480">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/c0a94a56-c304-46ab-8abf-5b5296785111">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/2b08da67-8291-488e-a0ba-9f77c05e502d">
+<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/4409b574-4593-43fc-87d2-3a76ee5cd14c">
+
 
 # License and copyrights
 
