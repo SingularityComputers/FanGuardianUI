@@ -384,7 +384,7 @@ void screenUpdater() {
 
 /* loadSettingsFromNVFlash loads user settings from display board NVRAM */
 void loadSettingsFromNVFlash() {
-  char label_text[4];
+  char label_text[6];
   preferences.begin("settings", true);
   value_r = preferences.getUChar("value_r", 0);
   value_g = preferences.getUChar("value_g", 0);
@@ -407,9 +407,9 @@ void loadSettingsFromNVFlash() {
   snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[1]));
   lv_textarea_set_text(ui_Fan2Min, label_text);
   snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[2]));
-  lv_textarea_set_text(ui_Fan3Min, label_text);
+  lv_textarea_set_text(ui_Pump1Min, label_text);
   snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[3]));
-  lv_textarea_set_text(ui_Fan4Min, label_text);
+  lv_textarea_set_text(ui_Pump2Min, label_text);
   alert_color = unpackHSV(preferences.getUInt("alert_color", 25700));
   lv_colorwheel_set_hsv(ui_Colorwheel2, alert_color);
   rgb_pattern_index = preferences.getUChar("pattern",3);
@@ -425,6 +425,30 @@ void loadSettingsFromNVFlash() {
   rgb_led_count = preferences.getUChar("rgb_led_count", 32);
   snprintf(label_text, sizeof(label_text), "%d", static_cast<uint16_t>(rgb_led_count));
   lv_textarea_set_text(ui_NumOfLEDs, label_text);
+  fan1_label_index = preferences.getUChar("fan1_lbl_index", 0);
+  lv_dropdown_set_selected(ui_Fan1LabelDropdown, fan1_label_index);
+  fan2_label_index = preferences.getUChar("fan2_lbl_index", 0);
+  lv_dropdown_set_selected(ui_Fan2LabelDropdown, fan2_label_index);
+  pump1_label_index = preferences.getUChar("pump1_lbl_index", 0);
+  lv_dropdown_set_selected(ui_Pump1LabelDropdown, pump1_label_index);
+  pump2_label_index = preferences.getUChar("pump2_lbl_index", 0);
+  lv_dropdown_set_selected(ui_Pump2LabelDropdown, pump2_label_index);
+  temp1_label_index = preferences.getUChar("temp1_lbl_index", 0);
+  lv_dropdown_set_selected(ui_Temp1LabelDropdown, temp1_label_index);
+  temp2_label_index = preferences.getUChar("temp2_lbl_index", 0);
+  lv_dropdown_set_selected(ui_Temp2LabelDropdown, temp2_label_index);
+  lv_dropdown_get_selected_str(ui_Fan1LabelDropdown,label_text,8);
+  lv_label_set_text(ui_LabelFan1, label_text);
+  lv_dropdown_get_selected_str(ui_Fan2LabelDropdown,label_text,8);
+  lv_label_set_text(ui_LabelFan2, label_text);
+  lv_dropdown_get_selected_str(ui_Pump1LabelDropdown,label_text,8);
+  lv_label_set_text(ui_LabelPump2, label_text);
+  lv_dropdown_get_selected_str(ui_Pump2LabelDropdown,label_text,8);
+  lv_label_set_text(ui_LabelPump2, label_text);
+  lv_dropdown_get_selected_str(ui_Temp1LabelDropdown,label_text,8);
+  lv_label_set_text(ui_LabelT1, label_text);
+  lv_dropdown_get_selected_str(ui_Temp2LabelDropdown,label_text,8);
+  lv_label_set_text(ui_LabelT2, label_text);
   preferences.end();
 }
 

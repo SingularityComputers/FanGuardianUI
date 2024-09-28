@@ -81,6 +81,10 @@ lv_obj_set_style_text_opa(ui_LEDEffectDropdown, 255, LV_PART_MAIN| LV_STATE_DEFA
 lv_obj_set_style_bg_color(ui_LEDEffectDropdown, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LEDEffectDropdown, 150, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_LEDEffectDropdown, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_left(ui_LEDEffectDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_right(ui_LEDEffectDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_top(ui_LEDEffectDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_bottom(ui_LEDEffectDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 
 

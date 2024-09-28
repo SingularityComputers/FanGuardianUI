@@ -2,8 +2,6 @@
 #include "ui.h"
 #include <lvgl.h>
 
-extern uint8_t rgb_pattern_index;
-
 void toggle_visibility(bool show, int count, lv_obj_t* objs[]) {
     for (int i = 0; i < count; i++) {
         if (show) {
