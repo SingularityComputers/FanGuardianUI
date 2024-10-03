@@ -32,12 +32,12 @@ lv_obj_t *ui_ValueFan2;
 lv_obj_t *ui_RPMFan2;
 lv_obj_t *ui_PanelFan3;
 lv_obj_t *ui_ArcFan3;
-lv_obj_t *ui_LabelFan3;
+lv_obj_t *ui_LabelPump1;
 lv_obj_t *ui_ValueFan3;
 lv_obj_t *ui_RPMFan3;
 lv_obj_t *ui_PanelFan4;
 lv_obj_t *ui_ArcFan4;
-lv_obj_t *ui_LabelFan4;
+lv_obj_t *ui_LabelPump2;
 lv_obj_t *ui_ValueFan4;
 lv_obj_t *ui_RPMFan4;
 lv_obj_t *ui_Panel12Volts;
@@ -127,11 +127,27 @@ lv_obj_t *ui_Fan2Label;
 void ui_event_Fan2Min( lv_event_t * e);
 lv_obj_t *ui_Fan2Min;
 lv_obj_t *ui_Pump1Label;
-void ui_event_Fan3Min( lv_event_t * e);
-lv_obj_t *ui_Fan3Min;
+void ui_event_Pump1Min( lv_event_t * e);
+lv_obj_t *ui_Pump1Min;
 lv_obj_t *ui_Pump2Label;
-void ui_event_Fan4Min( lv_event_t * e);
-lv_obj_t *ui_Fan4Min;
+void ui_event_Pump2Min( lv_event_t * e);
+lv_obj_t *ui_Pump2Min;
+void ui_event_Fan1LabelDropdown( lv_event_t * e);
+lv_obj_t *ui_Fan1LabelDropdown;
+void ui_event_Fan2LabelDropdown( lv_event_t * e);
+lv_obj_t *ui_Fan2LabelDropdown;
+void ui_event_Pump1LabelDropdown( lv_event_t * e);
+lv_obj_t *ui_Pump1LabelDropdown;
+void ui_event_Pump2LabelDropdown( lv_event_t * e);
+lv_obj_t *ui_Pump2LabelDropdown;
+lv_obj_t *ui_Temp2Label;
+lv_obj_t *ui_Temp1Label;
+void ui_event_Temp1LabelDropdown( lv_event_t * e);
+lv_obj_t *ui_Temp1LabelDropdown;
+void ui_event_Temp2LabelDropdown( lv_event_t * e);
+lv_obj_t *ui_Temp2LabelDropdown;
+lv_obj_t *ui_ThemeLabel;
+lv_obj_t *ui_ThemeDropdown;
 lv_obj_t *ui_RGBPanel2;
 lv_obj_t *ui_RGBPanel2Title;
 void ui_event_Colorwheel2( lv_event_t * e);
@@ -310,24 +326,60 @@ if ( event_code == LV_EVENT_DEFOCUSED) {
       _ui_flag_modify( ui_AlertSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
 }
 }
-void ui_event_Fan3Min( lv_event_t * e) {
+void ui_event_Pump1Min( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_FOCUSED) {
       _ui_flag_modify( ui_AlertSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
-      _ui_keyboard_set_target(ui_AlertSettingsScreenKB,  ui_Fan3Min);
+      _ui_keyboard_set_target(ui_AlertSettingsScreenKB,  ui_Pump1Min);
 }
 if ( event_code == LV_EVENT_DEFOCUSED) {
       _ui_flag_modify( ui_AlertSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
 }
 }
-void ui_event_Fan4Min( lv_event_t * e) {
+void ui_event_Pump2Min( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_FOCUSED) {
       _ui_flag_modify( ui_AlertSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
-      _ui_keyboard_set_target(ui_AlertSettingsScreenKB,  ui_Fan4Min);
+      _ui_keyboard_set_target(ui_AlertSettingsScreenKB,  ui_Pump2Min);
 }
 if ( event_code == LV_EVENT_DEFOCUSED) {
       _ui_flag_modify( ui_AlertSettingsScreenKB, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+}
+}
+void ui_event_Fan1LabelDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      fan1_label_dropdown_event( e );
+}
+}
+void ui_event_Fan2LabelDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      fan2_label_dropdown_event( e );
+}
+}
+void ui_event_Pump1LabelDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      pump1_label_dropdown_event( e );
+}
+}
+void ui_event_Pump2LabelDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      pump2_label_dropdown_event( e );
+}
+}
+void ui_event_Temp1LabelDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      temp1_label_dropdown_event( e );
+}
+}
+void ui_event_Temp2LabelDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      temp2_label_dropdown_event( e );
 }
 }
 void ui_event_Colorwheel2( lv_event_t * e) {

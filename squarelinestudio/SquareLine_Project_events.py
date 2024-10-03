@@ -30,3 +30,35 @@ def SaveAlertSettings(event_struct):
 def temp_sensor_dropdown_event_cb(event_struct):
     return
 
+
+def pump2_label_changed(event_struct):
+    return
+
+
+def pump2_label_dropdown(event_struct):
+    return
+
+
+def pump2_label_dropdown_event(event_struct):
+    return
+
+
+def pump1_label_dropdown_event(event_struct):
+    return
+
+
+def fan2_label_dropdown_event(event_struct):
+    return
+
+
+def fan1_label_dropdown_event(event_struct):
+    return
+
+
+def temp1_label_dropdown_event(event_struct):
+    return
+
+
+def temp2_label_dropdown_event(event_struct):
+    return
+
