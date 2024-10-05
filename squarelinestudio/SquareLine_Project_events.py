@@ -62,3 +62,15 @@ def temp1_label_dropdown_event(event_struct):
 def temp2_label_dropdown_event(event_struct):
     return
 
+
+def SaveSettings(event_struct):
+    return
+
+
+def flip_screen_cb_change_event(event_struct):
+    return
+
+
+def bg_dropdown_change_event(event_struct):
+    return
+
