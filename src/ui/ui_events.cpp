@@ -224,6 +224,8 @@ void flip_screen_cb_change_event(lv_event_t * e)
   if (event_code == LV_EVENT_VALUE_CHANGED) {
     flip_screen = lv_obj_has_state(target, LV_STATE_CHECKED);
     set_screen_flip();
+    lv_obj_invalidate(lv_scr_act());
+    lv_refr_now(NULL);
   }
 }
 

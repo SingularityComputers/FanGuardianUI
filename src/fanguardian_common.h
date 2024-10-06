@@ -97,16 +97,17 @@ extern uint8_t background_image_index;
 extern bool flip_screen;
 extern LGFX tft;
 
-extern const uint8_t ui_img_aether_png_data[];
-extern const uint8_t ui_img_afterburner_png_data[];
-extern const uint8_t ui_img_divinity_png_data[];
-extern const uint8_t ui_img_final_hours_png_data[];
-extern const uint8_t ui_img_gaia_png_data[];
-extern const uint8_t ui_img_jade_png_data[];
-extern const uint8_t ui_img_napier_png_data[];
-extern const uint8_t ui_img_nibiru_png_data[];
-extern const uint8_t ui_img_plasmatic_png_data[];
-extern const uint8_t ui_img_war_png_data[];
+LV_IMG_DECLARE( ui_img_aether_png);         // assets/Aether.png
+LV_IMG_DECLARE( ui_img_afterburner_png);    // assets/Afterburner.png
+LV_IMG_DECLARE( ui_img_divinity_png);       // assets/Divinity.png
+LV_IMG_DECLARE( ui_img_final_hours_png);    // assets/Final Hours.png
+LV_IMG_DECLARE( ui_img_gaia_png);           // assets/Gaia.png
+LV_IMG_DECLARE( ui_img_jade_png);           // assets/Jade.png
+LV_IMG_DECLARE( ui_img_napier_png);         // assets/Napier.png
+LV_IMG_DECLARE( ui_img_nibiru_png);         // assets/Nibiru.png
+LV_IMG_DECLARE( ui_img_plasmatic_png);      // assets/Plasmatic.png
+LV_IMG_DECLARE( ui_img_singularity_png);    // assets/Singularity.png
+LV_IMG_DECLARE( ui_img_war_png);            // assets/War.png
 
 void toggle_visibility(bool show, int count, lv_obj_t* objs[]);
 void led_setting_screen_dynamic_ui_events();
