@@ -18,7 +18,9 @@ uint8_t pump1_label_index = 0;
 uint8_t pump2_label_index = 0;
 uint8_t temp1_label_index = 0;
 uint8_t temp2_label_index = 0;
+uint8_t background_image_index = 0;
 bool rgb_led_alert_enabled = false;
+bool flip_screen = false;
 uint16_t rgb_led_count = 32;
 
 void colorslider_event_cb(lv_event_t * e)
@@ -102,7 +104,7 @@ void led_effect_dropdown_event_cb(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    rgb_pattern_index = lv_dropdown_get_selected(ui_LEDEffectDropdown);
+    rgb_pattern_index = lv_dropdown_get_selected(target);
     led_setting_screen_dynamic_ui_events();
   }
 }
@@ -113,10 +115,10 @@ void num_of_leds_event_cb(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    rgb_led_count = static_cast<uint16_t>(atoi(lv_textarea_get_text(ui_NumOfLEDs)));
+    rgb_led_count = static_cast<uint16_t>(atoi(lv_textarea_get_text(target)));
     if (rgb_led_count > 120) {
       rgb_led_count = 120;
-      lv_textarea_set_text(ui_NumOfLEDs, "120");
+      lv_textarea_set_text(target, "120");
     }
   }
 }
@@ -127,7 +129,7 @@ void temp_sensor_dropdown_event_cb(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    rgb_pattern_temp_sensor_index = lv_dropdown_get_selected(ui_TempSensorListDropdown);
+    rgb_pattern_temp_sensor_index = lv_dropdown_get_selected(target);
   }
 }
 
@@ -137,8 +139,8 @@ void fan2_label_dropdown_event(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    fan2_label_index = lv_dropdown_get_selected(ui_Fan2LabelDropdown);
-    lv_dropdown_get_selected_str(ui_Fan2LabelDropdown,label_text,8);
+    fan2_label_index = lv_dropdown_get_selected(target);
+    lv_dropdown_get_selected_str(target,label_text,8);
     lv_label_set_text(ui_LabelFan2, label_text);
   }
 }
@@ -149,8 +151,8 @@ void pump1_label_dropdown_event(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    pump1_label_index = lv_dropdown_get_selected(ui_Pump1LabelDropdown);
-    lv_dropdown_get_selected_str(ui_Pump1LabelDropdown,label_text,8);
+    pump1_label_index = lv_dropdown_get_selected(target);
+    lv_dropdown_get_selected_str(target,label_text,8);
     lv_label_set_text(ui_LabelPump1, label_text);
   }
 }
@@ -161,8 +163,8 @@ void pump2_label_dropdown_event(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    pump2_label_index = lv_dropdown_get_selected(ui_Pump2LabelDropdown);
-    lv_dropdown_get_selected_str(ui_Pump2LabelDropdown,label_text,8);
+    pump2_label_index = lv_dropdown_get_selected(target);
+    lv_dropdown_get_selected_str(target,label_text,8);
     lv_label_set_text(ui_LabelPump2, label_text);
   }
 }
@@ -173,8 +175,8 @@ void fan1_label_dropdown_event(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    fan1_label_index = lv_dropdown_get_selected(ui_Fan1LabelDropdown);
-    lv_dropdown_get_selected_str(ui_Fan1LabelDropdown,label_text,8);
+    fan1_label_index = lv_dropdown_get_selected(target);
+    lv_dropdown_get_selected_str(target,label_text,8);
     lv_label_set_text(ui_LabelFan1, label_text);
   }
 }
@@ -185,8 +187,8 @@ void temp1_label_dropdown_event(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    temp1_label_index = lv_dropdown_get_selected(ui_Temp1LabelDropdown);
-    lv_dropdown_get_selected_str(ui_Temp1LabelDropdown,label_text,8);
+    temp1_label_index = lv_dropdown_get_selected(target);
+    lv_dropdown_get_selected_str(target, label_text, 8);
     lv_label_set_text(ui_LabelT1, label_text);
   }
 }
@@ -197,8 +199,40 @@ void temp2_label_dropdown_event(lv_event_t * e)
   lv_obj_t * target = lv_event_get_target(e);
 
   if (event_code == LV_EVENT_VALUE_CHANGED) {
-    temp2_label_index = lv_dropdown_get_selected(ui_Temp2LabelDropdown);
-    lv_dropdown_get_selected_str(ui_Temp2LabelDropdown,label_text,8);
+    temp2_label_index = lv_dropdown_get_selected(target);
+    lv_dropdown_get_selected_str(target,label_text, 8);
     lv_label_set_text(ui_LabelT2, label_text);
   }
+}
+
+void bg_dropdown_change_event(lv_event_t * e)
+{
+  lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t * target = lv_event_get_target(e);
+
+  if (event_code == LV_EVENT_VALUE_CHANGED) {
+    background_image_index = lv_dropdown_get_selected(target);
+    set_background_image(background_image_index);
+  }
+}
+
+void flip_screen_cb_change_event(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t * target = lv_event_get_target(e);
+
+  if (event_code == LV_EVENT_VALUE_CHANGED) {
+    flip_screen = lv_obj_has_state(target, LV_STATE_CHECKED);
+    set_screen_flip();
+    lv_obj_invalidate(lv_scr_act());
+    lv_refr_now(NULL);
+  }
+}
+
+void SaveSettings(lv_event_t * e)
+{
+  preferences.begin("settings", false);
+  preferences.putBool("flip_screen", flip_screen);
+  preferences.putUChar("bg_img_index", background_image_index);
+  preferences.end();
 }

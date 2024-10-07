@@ -1,8 +1,7 @@
 #include <led_functions.h>
 #include <fanguardian_common.h>
 #include <Wire.h>
-#define LGFX_USE_V1
-#include <LovyanGFX.hpp>
+
 #include <lvgl.h>
 #include "ui/ui.h"
 #include <FastLED.h>
@@ -49,96 +48,13 @@ bool isADSFailed = false;
 
 // temperature variable
 volatile float temps[4] = {0.0,0.0,0.0,0.0};
-
 volatile bool newUARTData = false;
 String receivedData = "";
 Adafruit_ADS1115 ads;
 INA3221 ina_0(INA3221_ADDR40_GND);
 
-
-// LovyanGFX class definition
-class LGFX : public lgfx::LGFX_Device {
-  lgfx::Panel_ST7796 _panel_instance;
-  lgfx::Bus_Parallel8 _bus_instance;
-  lgfx::Light_PWM _light_instance;
-  lgfx::Touch_FT5x06 _touch_instance;
-
-public:
-  LGFX(void) {
-    {
-      auto cfg = _bus_instance.config();
-      cfg.freq_write = 60000000;
-      cfg.pin_wr = 47;
-      cfg.pin_rd = -1;
-      cfg.pin_rs = 0;
-      cfg.pin_d0 = 9;
-      cfg.pin_d1 = 46;
-      cfg.pin_d2 = 3;
-      cfg.pin_d3 = 8;
-      cfg.pin_d4 = 18;
-      cfg.pin_d5 = 17;
-      cfg.pin_d6 = 16;
-      cfg.pin_d7 = 15;
-      _bus_instance.config(cfg);
-      _panel_instance.setBus(&_bus_instance);
-    }
-
-    {
-      auto cfg = _panel_instance.config();
-      cfg.pin_cs = -1;
-      cfg.pin_rst = 4;
-      cfg.pin_busy = -1;
-      cfg.memory_width = 320;
-      cfg.memory_height = 480;
-      cfg.panel_width = 320;
-      cfg.panel_height = 480;
-      cfg.offset_x = 0;
-      cfg.offset_y = 0;
-      cfg.offset_rotation = 0;
-      cfg.dummy_read_pixel = 8;
-      cfg.dummy_read_bits = 1;
-      cfg.readable = true;
-      cfg.invert = true;
-      cfg.rgb_order = false;
-      cfg.dlen_16bit = false;
-      cfg.bus_shared = false;
-
-      _panel_instance.config(cfg);
-    }
-
-    {
-      auto cfg = _light_instance.config();
-      cfg.pin_bl = 45;
-      cfg.invert = false;
-      cfg.freq = 44100;
-      cfg.pwm_channel = 7;
-
-      _light_instance.config(cfg);
-      _panel_instance.setLight(&_light_instance);
-    }
-
-    {
-      auto cfg = _touch_instance.config();
-      cfg.i2c_port = 1;
-      cfg.i2c_addr = 0x38;
-      cfg.pin_sda = 6;
-      cfg.pin_scl = 5;
-      cfg.freq = 600000;
-      cfg.x_min = 0;
-      cfg.x_max = 320;
-      cfg.y_min = 0;
-      cfg.y_max = 480;
-
-      _touch_instance.config(cfg);
-      _panel_instance.setTouch(&_touch_instance);
-    }
-
-    setPanel(&_panel_instance);
-  }
-};
-
 // LVGL variables
-static LGFX tft;
+LGFX tft;
 static const uint32_t screenWidth = 480;
 static const uint32_t screenHeight = 320;
 static lv_disp_draw_buf_t draw_buf;
@@ -159,9 +75,10 @@ void readRPMs();
 void ledController();
 void rpmWatcher();
 void loadSettingsFromNVFlash();
+void initGuiElements();
 
 /* Display flushing */
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
+void displayFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
 
@@ -174,7 +91,7 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 }
 
 /* Read the touchpad */
-void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
+void touchpadRead(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
   uint16_t x, y;
   if (tft.getTouch(&x, &y)) {
     data->state = LV_INDEV_STATE_PR;
@@ -187,6 +104,10 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 }
 
 void setup() {
+  // load user settings from NVRAM
+  loadSettingsFromNVFlash();
+
+  // initialize display
   initDisplay();
 
   uint32_t DISP_BUF_SIZE = 480 * 320;
@@ -201,28 +122,18 @@ void setup() {
 
   disp_drv.hor_res = screenWidth;
   disp_drv.ver_res = screenHeight;
-  disp_drv.flush_cb = my_disp_flush;
+  disp_drv.flush_cb = displayFlush;
   disp_drv.draw_buf = &draw_buf;
   lv_disp_drv_register(&disp_drv);
 
   static lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
-  indev_drv.read_cb = my_touchpad_read;
+  indev_drv.read_cb = touchpadRead;
   lv_indev_drv_register(&indev_drv);
 
   // call UI screen initializations
   ui_init();
-
-  // create custom keyboard map
-  static const char * kb_mapx[] = {"1", "2", "3", "\n", 
-                                  "4", "5", "6", "\n",
-                                  "7", "8", "9", "\n",
-                                  LV_SYMBOL_BACKSPACE, "0", NULL, NULL
-                                };
-  static const lv_btnmatrix_ctrl_t kb_ctrlx[] = {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
-  lv_keyboard_set_map(ui_LEDSettingsScreenKB, LV_KEYBOARD_MODE_USER_1, kb_mapx, kb_ctrlx);
-  lv_keyboard_set_map(ui_AlertSettingsScreenKB, LV_KEYBOARD_MODE_USER_1, kb_mapx, kb_ctrlx);
 
   // init peripherials
   Serial.begin(9600);
@@ -254,23 +165,8 @@ void setup() {
   // Initialize WS2812B
   initLED();
 
-  // load user settings from NVRAM
-  loadSettingsFromNVFlash();
-
-  // set initial state of ui elements
-  led_setting_screen_dynamic_ui_events();
-
-  // set pointers of ui_ArcFan objects
-  ui_rpm_arcs[0] = ui_ArcFan1;
-  ui_rpm_arcs[1] = ui_ArcFan2;
-  ui_rpm_arcs[2] = ui_ArcFan3;
-  ui_rpm_arcs[3] = ui_ArcFan4;
-
-  // set pointers of ui_ValueFan objects
-  ui_rpm_labels[0] = ui_ValueFan1;
-  ui_rpm_labels[1] = ui_ValueFan2;
-  ui_rpm_labels[2] = ui_ValueFan3;
-  ui_rpm_labels[3] = ui_ValueFan4;
+  // initialize GUI elements (checkbox, dropdown, slider etc.) state
+  initGuiElements();
 
   // turn on backlight after all screen initializations done
   // this will hide garbage from framebuffer
@@ -292,22 +188,129 @@ void loop() {
   delay(5);
 }
 
+/* loadSettingsFromNVFlash loads user settings from display board NVRAM */
+void loadSettingsFromNVFlash() {
+  preferences.begin("settings", true);
+
+  flip_screen = preferences.getBool("flip_screen", false);
+
+  value_r = preferences.getUChar("value_r", 0);
+  value_g = preferences.getUChar("value_g", 0);
+  value_b = preferences.getUChar("value_b", 0);
+
+	fanAlertRPMs[0] = preferences.getUShort("fan_1_alert", 0);
+  fanAlertRPMs[1] = preferences.getUShort("fan_2_alert", 0);
+  fanAlertRPMs[2] = preferences.getUShort("fan_3_alert", 0);
+  fanAlertRPMs[3] = preferences.getUShort("fan_4_alert", 0);
+  
+  alert_color = unpackHSV(preferences.getUInt("alert_color", 25700));
+  rgb_pattern_index = preferences.getUChar("pattern",3);
+  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 0);
+  rgb_led_alert_enabled = preferences.getBool("led_alert", false);
+  rgb_led_count = preferences.getUChar("rgb_led_count", 32);
+  fan1_label_index = preferences.getUChar("fan1_lbl_index", 0);
+  fan2_label_index = preferences.getUChar("fan2_lbl_index", 0);
+  pump1_label_index = preferences.getUChar("pump1_lbl_index", 0);
+  pump2_label_index = preferences.getUChar("pump2_lbl_index", 0);
+  temp1_label_index = preferences.getUChar("temp1_lbl_index", 0);
+  temp2_label_index = preferences.getUChar("temp2_lbl_index", 0);
+  background_image_index = preferences.getUChar("bg_img_index", 0);
+  preferences.end();
+}
+
 /* initDisplay initializes display */
 void initDisplay() {
   tft.begin();
-  tft.setRotation(1);
-  tft.setBrightness(0);   // init with backlight off, this avoids showing framebuffer garbage
+  set_screen_flip();
+  tft.setBrightness(0);   // init with backlight off, this avoids showing framebuffer garbage 
 }
 
 /* initLED initializes the RGB leds */
 void initLED() {
-  preferences.begin("settings", false);
-  value_r = preferences.getUChar("value_r", 0);
-  value_g = preferences.getUChar("value_g", 0);
-  value_b = preferences.getUChar("value_b", 0);
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, rgb_led_count);
   ledPatternSolid(leds, rgb_led_count);
-  preferences.end();
+}
+
+void initGuiElements() {
+  // create custom keyboard map
+  static const char * kb_mapx[] = {"1", "2", "3", "\n", 
+                                  "4", "5", "6", "\n",
+                                  "7", "8", "9", "\n",
+                                  LV_SYMBOL_BACKSPACE, "0", NULL, NULL
+                                };
+  static const lv_btnmatrix_ctrl_t kb_ctrlx[] = {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
+  lv_keyboard_set_map(ui_LEDSettingsScreenKB, LV_KEYBOARD_MODE_USER_1, kb_mapx, kb_ctrlx);
+  lv_keyboard_set_map(ui_AlertSettingsScreenKB, LV_KEYBOARD_MODE_USER_1, kb_mapx, kb_ctrlx);
+
+  // set initial state for UI elements on LED setting screen
+  led_setting_screen_dynamic_ui_events();
+
+  // set pointers of ui_ArcFan objects
+  ui_rpm_arcs[0] = ui_ArcFan1;
+  ui_rpm_arcs[1] = ui_ArcFan2;
+  ui_rpm_arcs[2] = ui_ArcFan3;
+  ui_rpm_arcs[3] = ui_ArcFan4;
+
+  // set pointers of ui_ValueFan objects
+  ui_rpm_labels[0] = ui_ValueFan1;
+  ui_rpm_labels[1] = ui_ValueFan2;
+  ui_rpm_labels[2] = ui_ValueFan3;
+  ui_rpm_labels[3] = ui_ValueFan4;
+
+  // set initial state for lv_* components on all screens
+  char tmp_label_text[6];
+  lv_slider_set_value(ui_RedSlider, value_r, LV_ANIM_ON);
+  lv_slider_set_value(ui_GreenSlider, value_g, LV_ANIM_ON);
+  lv_slider_set_value(ui_BlueSlider, value_b, LV_ANIM_ON);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", value_r);
+  lv_label_set_text(ui_RedSliderValue, tmp_label_text);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", value_g);
+  lv_label_set_text(ui_GreenSliderValue, tmp_label_text);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", value_b);
+  lv_label_set_text(ui_BlueSliderValue, tmp_label_text);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", static_cast<int>(fanAlertRPMs[0]));
+  lv_textarea_set_text(ui_Fan1Min, tmp_label_text);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", static_cast<int>(fanAlertRPMs[1]));
+  lv_textarea_set_text(ui_Fan2Min, tmp_label_text);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", static_cast<int>(fanAlertRPMs[2]));
+  lv_textarea_set_text(ui_Pump1Min, tmp_label_text);
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", static_cast<int>(fanAlertRPMs[3]));
+  lv_textarea_set_text(ui_Pump2Min, tmp_label_text);
+  lv_colorwheel_set_hsv(ui_Colorwheel2, alert_color);
+  lv_dropdown_set_selected(ui_LEDEffectDropdown, rgb_pattern_index);
+  lv_dropdown_set_selected(ui_TempSensorListDropdown, rgb_pattern_temp_sensor_index);
+  if (rgb_led_alert_enabled) {
+    lv_obj_add_state(ui_EnableLedAlert, LV_STATE_CHECKED);
+  } else {
+    lv_obj_clear_state(ui_EnableLedAlert, LV_STATE_CHECKED);
+  }
+  snprintf(tmp_label_text, sizeof(tmp_label_text), "%d", static_cast<uint16_t>(rgb_led_count));
+  lv_textarea_set_text(ui_NumOfLEDs, tmp_label_text);
+  lv_dropdown_set_selected(ui_Fan1LabelDropdown, fan1_label_index);
+  lv_dropdown_set_selected(ui_Fan2LabelDropdown, fan2_label_index);
+  lv_dropdown_set_selected(ui_Pump1LabelDropdown, pump1_label_index);
+  lv_dropdown_set_selected(ui_Pump2LabelDropdown, pump2_label_index);
+  lv_dropdown_set_selected(ui_Temp1LabelDropdown, temp1_label_index);
+  lv_dropdown_set_selected(ui_Temp2LabelDropdown, temp2_label_index);
+  lv_dropdown_get_selected_str(ui_Fan1LabelDropdown,tmp_label_text,8);
+  lv_label_set_text(ui_LabelFan1, tmp_label_text);
+  lv_dropdown_get_selected_str(ui_Fan2LabelDropdown, tmp_label_text,8);
+  lv_label_set_text(ui_LabelFan2, tmp_label_text);
+  lv_dropdown_get_selected_str(ui_Pump1LabelDropdown, tmp_label_text,8);
+  lv_label_set_text(ui_LabelPump2, tmp_label_text);
+  lv_dropdown_get_selected_str(ui_Pump2LabelDropdown, tmp_label_text,8);
+  lv_label_set_text(ui_LabelPump2, tmp_label_text);
+  lv_dropdown_get_selected_str(ui_Temp1LabelDropdown, tmp_label_text,8);
+  lv_label_set_text(ui_LabelT1, tmp_label_text);
+  lv_dropdown_get_selected_str(ui_Temp2LabelDropdown, tmp_label_text,8);
+  lv_label_set_text(ui_LabelT2, tmp_label_text);
+  if(flip_screen) {
+    lv_obj_add_state(ui_FlipScreenCheckBox, LV_STATE_CHECKED); 
+  } else {
+    lv_obj_clear_state(ui_FlipScreenCheckBox, LV_STATE_CHECKED);
+  }
+  lv_dropdown_set_selected(ui_BgDropdown, background_image_index);
+  set_background_image(background_image_index);
 }
 
 /* readTEMPs reads temperature values from thermistor */
@@ -380,76 +383,6 @@ void screenUpdater() {
   lv_label_set_text_fmt(ui_Volts12Value, "%.2f", voltages[0]);
   lv_label_set_text_fmt(ui_Volts5Value, "%.2f", voltages[1]);
   lv_label_set_text_fmt(ui_Volts3V3Value, "%.2f", voltages[2]);
-}
-
-/* loadSettingsFromNVFlash loads user settings from display board NVRAM */
-void loadSettingsFromNVFlash() {
-  char label_text[6];
-  preferences.begin("settings", true);
-  value_r = preferences.getUChar("value_r", 0);
-  value_g = preferences.getUChar("value_g", 0);
-  value_b = preferences.getUChar("value_b", 0);
-  lv_slider_set_value(ui_RedSlider, value_r, LV_ANIM_ON);
-  lv_slider_set_value(ui_GreenSlider, value_g, LV_ANIM_ON);
-  lv_slider_set_value(ui_BlueSlider, value_b, LV_ANIM_ON);
-  snprintf(label_text, sizeof(label_text), "%d", value_r);
-  lv_label_set_text(ui_RedSliderValue, label_text);
-  snprintf(label_text, sizeof(label_text), "%d", value_g);
-  lv_label_set_text(ui_GreenSliderValue, label_text);
-  snprintf(label_text, sizeof(label_text), "%d", value_b);
-  lv_label_set_text(ui_BlueSliderValue, label_text);
-	fanAlertRPMs[0] = preferences.getUShort("fan_1_alert", 0);
-  fanAlertRPMs[1] = preferences.getUShort("fan_2_alert", 0);
-  fanAlertRPMs[2] = preferences.getUShort("fan_3_alert", 0);
-  fanAlertRPMs[3] = preferences.getUShort("fan_4_alert", 0);
-  snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[0]));
-  lv_textarea_set_text(ui_Fan1Min, label_text);
-  snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[1]));
-  lv_textarea_set_text(ui_Fan2Min, label_text);
-  snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[2]));
-  lv_textarea_set_text(ui_Pump1Min, label_text);
-  snprintf(label_text, sizeof(label_text), "%d", static_cast<int>(fanAlertRPMs[3]));
-  lv_textarea_set_text(ui_Pump2Min, label_text);
-  alert_color = unpackHSV(preferences.getUInt("alert_color", 25700));
-  lv_colorwheel_set_hsv(ui_Colorwheel2, alert_color);
-  rgb_pattern_index = preferences.getUChar("pattern",3);
-  lv_dropdown_set_selected(ui_LEDEffectDropdown, rgb_pattern_index);
-  rgb_pattern_temp_sensor_index = preferences.getUChar("sensor_index", 0);
-  lv_dropdown_set_selected(ui_TempSensorListDropdown, rgb_pattern_temp_sensor_index);
-  rgb_led_alert_enabled = preferences.getBool("led_alert", false);
-  if (rgb_led_alert_enabled) {
-    lv_obj_add_state(ui_EnableLedAlert, LV_STATE_CHECKED);
-  } else {
-    lv_obj_clear_state(ui_EnableLedAlert, LV_STATE_CHECKED);
-  }
-  rgb_led_count = preferences.getUChar("rgb_led_count", 32);
-  snprintf(label_text, sizeof(label_text), "%d", static_cast<uint16_t>(rgb_led_count));
-  lv_textarea_set_text(ui_NumOfLEDs, label_text);
-  fan1_label_index = preferences.getUChar("fan1_lbl_index", 0);
-  lv_dropdown_set_selected(ui_Fan1LabelDropdown, fan1_label_index);
-  fan2_label_index = preferences.getUChar("fan2_lbl_index", 0);
-  lv_dropdown_set_selected(ui_Fan2LabelDropdown, fan2_label_index);
-  pump1_label_index = preferences.getUChar("pump1_lbl_index", 0);
-  lv_dropdown_set_selected(ui_Pump1LabelDropdown, pump1_label_index);
-  pump2_label_index = preferences.getUChar("pump2_lbl_index", 0);
-  lv_dropdown_set_selected(ui_Pump2LabelDropdown, pump2_label_index);
-  temp1_label_index = preferences.getUChar("temp1_lbl_index", 0);
-  lv_dropdown_set_selected(ui_Temp1LabelDropdown, temp1_label_index);
-  temp2_label_index = preferences.getUChar("temp2_lbl_index", 0);
-  lv_dropdown_set_selected(ui_Temp2LabelDropdown, temp2_label_index);
-  lv_dropdown_get_selected_str(ui_Fan1LabelDropdown,label_text,8);
-  lv_label_set_text(ui_LabelFan1, label_text);
-  lv_dropdown_get_selected_str(ui_Fan2LabelDropdown,label_text,8);
-  lv_label_set_text(ui_LabelFan2, label_text);
-  lv_dropdown_get_selected_str(ui_Pump1LabelDropdown,label_text,8);
-  lv_label_set_text(ui_LabelPump2, label_text);
-  lv_dropdown_get_selected_str(ui_Pump2LabelDropdown,label_text,8);
-  lv_label_set_text(ui_LabelPump2, label_text);
-  lv_dropdown_get_selected_str(ui_Temp1LabelDropdown,label_text,8);
-  lv_label_set_text(ui_LabelT1, label_text);
-  lv_dropdown_get_selected_str(ui_Temp2LabelDropdown,label_text,8);
-  lv_label_set_text(ui_LabelT2, label_text);
-  preferences.end();
 }
 
 /* core0Task runs screen tasks on Core0 */

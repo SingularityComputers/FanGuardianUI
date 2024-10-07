@@ -24,6 +24,9 @@ void temp2_label_dropdown_event(lv_event_t * e);
 void colorwheel_event_cb(lv_event_t * e);
 void led_alert_event_cb(lv_event_t * e);
 void SaveAlertSettings(lv_event_t * e);
+void bg_dropdown_change_event(lv_event_t * e);
+void flip_screen_cb_change_event(lv_event_t * e);
+void SaveSettings(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/
