@@ -4,6 +4,8 @@ SET(SOURCES screens/ui_LogoScreen.c
     screens/ui_AlertSettingsScreen.c
     screens/ui_SettingsScreen.c
     screens/ui_AboutScreen.c
+    ui_theme_manager.cpp
+    ui_themes.cpp
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c

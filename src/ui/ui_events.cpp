@@ -236,3 +236,14 @@ void SaveSettings(lv_event_t * e)
   preferences.putUChar("bg_img_index", background_image_index);
   preferences.end();
 }
+
+void theme_dropdown_change_event(lv_event_t * e)
+{
+  lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t * target = lv_event_get_target(e);
+
+  if (event_code == LV_EVENT_VALUE_CHANGED) {
+    uint8_t theme_index = lv_dropdown_get_selected(target);
+    ui_theme_set(theme_index);
+  }
+}

@@ -74,3 +74,7 @@ def flip_screen_cb_change_event(event_struct):
 def bg_dropdown_change_event(event_struct):
     return
 
+
+def theme_dropdown_change_event(event_struct):
+    return
+
