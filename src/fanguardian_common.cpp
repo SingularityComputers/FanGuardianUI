@@ -59,6 +59,8 @@ void set_screen_flip() {
   } else {
     tft.setRotation(1);
   }
+  uint16_t calData[8] = {0,0,0,480,330,0,330,480};
+  tft.setTouchCalibrate(calData);
 }
 
 void set_background_image(uint8_t bg_index) {

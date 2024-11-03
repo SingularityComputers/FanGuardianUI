@@ -72,7 +72,7 @@ public:
       cfg.i2c_addr = 0x38;
       cfg.pin_sda = 6;
       cfg.pin_scl = 5;
-      cfg.freq = 600000;
+      cfg.freq = 400000;
       cfg.x_min = 0;
       cfg.x_max = 320;
       cfg.y_min = 0;
