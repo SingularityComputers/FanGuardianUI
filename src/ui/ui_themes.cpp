@@ -5,20 +5,20 @@
 
 #include "ui.h"
 
-const ui_theme_variable_t _ui_theme_color_TEXT[3] = {0xFFFFFF, 0xFF0000, 0x00C1E0};
+const ui_theme_variable_t _ui_theme_color_TEXT[3] = {0xFFFFFF, 0xFF4F1C, 0x00C1E0};
 const ui_theme_variable_t _ui_theme_alpha_TEXT[3] = {255, 255, 255};
 
-const ui_theme_variable_t _ui_theme_color_LABELTEXT[3] = {0x000000, 0x000000, 0x00251C};
+const ui_theme_variable_t _ui_theme_color_LABELTEXT[3] = {0x000000, 0x461900, 0xD4DAFF};
 const ui_theme_variable_t _ui_theme_alpha_LABELTEXT[3] = {255, 255, 255};
 
-const ui_theme_variable_t _ui_theme_color_DROPDOWNBG[3] = {0xFFFFFF, 0xC300A1, 0x00DFC3};
+const ui_theme_variable_t _ui_theme_color_DROPDOWNBG[3] = {0xFFFFFF, 0xFFB034, 0x00A1DF};
 const ui_theme_variable_t _ui_theme_alpha_DROPDOWNBG[3] = {150, 150, 150};
 
-const ui_theme_variable_t _ui_theme_color_BUTTONBG[3] = {0xFFFFFF, 0xDA00FF, 0x00A392};
-const ui_theme_variable_t _ui_theme_alpha_BUTTONBG[3] = {0, 30, 70};
+const ui_theme_variable_t _ui_theme_color_BUTTONBG[3] = {0xFFFFFF, 0xCE2029, 0x0049AB};
+const ui_theme_variable_t _ui_theme_alpha_BUTTONBG[3] = {0, 50, 70};
 
-const ui_theme_variable_t _ui_theme_color_BORDERBG[3] = {0xFFFFFF, 0x9400FF, 0x00995B};
-const ui_theme_variable_t _ui_theme_alpha_BORDERBG[3] = {255, 255, 255};
+const ui_theme_variable_t _ui_theme_color_BORDERBG[3] = {0xFFFFFF, 0xFFCE26, 0x147AE8};
+const ui_theme_variable_t _ui_theme_alpha_BORDERBG[3] = {255, 140, 100};
 uint8_t ui_theme_idx = UI_THEME_DEFAULT;
 
 void ui_theme_set(uint8_t theme_idx)

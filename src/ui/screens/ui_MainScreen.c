@@ -528,10 +528,12 @@ lv_obj_set_x( ui_Ambient2Label, 0 );
 lv_obj_set_y( ui_Ambient2Label, -17 );
 lv_obj_set_align( ui_Ambient2Label, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Ambient2Label,"AMBIENT #2");
+ui_object_set_themeable_style_property(ui_Ambient2Label, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_LABELTEXT);
+ui_object_set_themeable_style_property(ui_Ambient2Label, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_LABELTEXT);
 lv_obj_set_style_text_font(ui_Ambient2Label, &lv_font_montserrat_12, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_radius(ui_Ambient2Label, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_Ambient2Label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Ambient2Label, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_object_set_themeable_style_property(ui_Ambient2Label, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_BG_COLOR, _ui_theme_color_BORDERBG);
+ui_object_set_themeable_style_property(ui_Ambient2Label, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_BG_OPA, _ui_theme_alpha_BORDERBG);
 lv_obj_set_style_pad_left(ui_Ambient2Label, 2, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_pad_right(ui_Ambient2Label, 2, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_pad_top(ui_Ambient2Label, 2, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -544,8 +546,8 @@ lv_obj_set_x( ui_Temp4Value, -10 );
 lv_obj_set_y( ui_Temp4Value, 12 );
 lv_obj_set_align( ui_Temp4Value, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Temp4Value,"0.0");
-lv_obj_set_style_text_color(ui_Temp4Value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_text_opa(ui_Temp4Value, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_object_set_themeable_style_property(ui_Temp4Value, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_TEXT);
+ui_object_set_themeable_style_property(ui_Temp4Value, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_TEXT);
 lv_obj_set_style_text_align(ui_Temp4Value, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Temp4Value, &lv_font_montserrat_28, LV_PART_MAIN| LV_STATE_DEFAULT);
 
@@ -556,8 +558,8 @@ lv_obj_set_x( ui_Temp4Label, 32 );
 lv_obj_set_y( ui_Temp4Label, 16 );
 lv_obj_set_align( ui_Temp4Label, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Temp4Label,"°C");
-lv_obj_set_style_text_color(ui_Temp4Label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_text_opa(ui_Temp4Label, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_object_set_themeable_style_property(ui_Temp4Label, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_TEXT);
+ui_object_set_themeable_style_property(ui_Temp4Label, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_TEXT);
 
 ui_PanelT1 = lv_obj_create(ui_MainScreen);
 lv_obj_set_width( ui_PanelT1, 110);
@@ -746,28 +748,28 @@ lv_obj_set_style_text_align(ui_SettingsButton, LV_TEXT_ALIGN_AUTO, LV_PART_MAIN|
 lv_obj_set_style_text_decor(ui_SettingsButton, LV_TEXT_DECOR_NONE, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_SettingsButton, &lv_font_montserrat_14, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_BackLabel3 = lv_label_create(ui_SettingsButton);
-lv_obj_set_width( ui_BackLabel3, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_BackLabel3, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_align( ui_BackLabel3, LV_ALIGN_CENTER );
-lv_label_set_text(ui_BackLabel3,"SETTINGS");
-ui_object_set_themeable_style_property(ui_BackLabel3, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_TEXT);
-ui_object_set_themeable_style_property(ui_BackLabel3, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_TEXT);
+ui_SettingsLabel = lv_label_create(ui_SettingsButton);
+lv_obj_set_width( ui_SettingsLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_SettingsLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_align( ui_SettingsLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_SettingsLabel,"SETTINGS");
+ui_object_set_themeable_style_property(ui_SettingsLabel, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_TEXT);
+ui_object_set_themeable_style_property(ui_SettingsLabel, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_TEXT);
 
-ui_Label1 = lv_label_create(ui_MainScreen);
-lv_obj_set_width( ui_Label1, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label1, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label1, -1 );
-lv_obj_set_y( ui_Label1, 34 );
-lv_obj_set_align( ui_Label1, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label1,"tap to switch");
-lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0xBBBBBB), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_text_opa(ui_Label1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_Label1, &lv_font_montserrat_12, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_TapToSwitchLabel = lv_label_create(ui_MainScreen);
+lv_obj_set_width( ui_TapToSwitchLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_TapToSwitchLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_TapToSwitchLabel, -1 );
+lv_obj_set_y( ui_TapToSwitchLabel, 34 );
+lv_obj_set_align( ui_TapToSwitchLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_TapToSwitchLabel,"tap to switch");
+lv_obj_set_style_text_color(ui_TapToSwitchLabel, lv_color_hex(0xBBBBBB), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_TapToSwitchLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_TapToSwitchLabel, &lv_font_montserrat_12, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_PanelAmbient1, ui_event_PanelAmbient1, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_PanelAmbient2, ui_event_PanelAmbient2, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_BackLabel3, ui_event_BackLabel3, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_SettingsLabel, ui_event_SettingsLabel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SettingsButton, ui_event_SettingsButton, LV_EVENT_ALL, NULL);
 
 }

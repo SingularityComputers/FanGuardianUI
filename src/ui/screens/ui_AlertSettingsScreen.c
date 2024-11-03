@@ -475,8 +475,11 @@ lv_obj_set_y( ui_AlertSettingsScreenKB, 13 );
 lv_obj_set_align( ui_AlertSettingsScreenKB, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_AlertSettingsScreenKB, LV_OBJ_FLAG_HIDDEN );   /// Flags
 lv_obj_set_style_radius(ui_AlertSettingsScreenKB, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_AlertSettingsScreenKB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_AlertSettingsScreenKB, 200, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_AlertSettingsScreenKB, lv_color_hex(0x7D7D7D), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_AlertSettingsScreenKB, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_color(ui_AlertSettingsScreenKB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_border_opa(ui_AlertSettingsScreenKB, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_width(ui_AlertSettingsScreenKB, 1, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_set_style_radius(ui_AlertSettingsScreenKB, 5, LV_PART_ITEMS| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_AlertSettingsScreenKB, lv_color_hex(0xFFFFFF), LV_PART_ITEMS | LV_STATE_DEFAULT );

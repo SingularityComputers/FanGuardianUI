@@ -170,23 +170,23 @@ lv_label_set_text(ui_NextLabel3,"NEXT");
 ui_object_set_themeable_style_property(ui_NextLabel3, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_TEXT);
 ui_object_set_themeable_style_property(ui_NextLabel3, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_TEXT);
 
-ui_Dropdown2 = lv_dropdown_create(ui_SettingsScreen);
-lv_dropdown_set_options( ui_Dropdown2, "DEFAULT\nSPOOKY\nNATURE" );
-lv_obj_set_width( ui_Dropdown2, 162);
-lv_obj_set_height( ui_Dropdown2, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Dropdown2, -24 );
-lv_obj_set_y( ui_Dropdown2, -47 );
-lv_obj_set_align( ui_Dropdown2, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Dropdown2, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-ui_object_set_themeable_style_property(ui_Dropdown2, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_LABELTEXT);
-ui_object_set_themeable_style_property(ui_Dropdown2, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_LABELTEXT);
-ui_object_set_themeable_style_property(ui_Dropdown2, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_BG_COLOR, _ui_theme_color_DROPDOWNBG);
-ui_object_set_themeable_style_property(ui_Dropdown2, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_BG_OPA, _ui_theme_alpha_DROPDOWNBG);
-lv_obj_set_style_border_width(ui_Dropdown2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_pad_left(ui_Dropdown2, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_pad_right(ui_Dropdown2, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_pad_top(ui_Dropdown2, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_pad_bottom(ui_Dropdown2, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_ThemeDropdown = lv_dropdown_create(ui_SettingsScreen);
+lv_dropdown_set_options( ui_ThemeDropdown, "DEFAULT\nFIREY\nWATERY" );
+lv_obj_set_width( ui_ThemeDropdown, 162);
+lv_obj_set_height( ui_ThemeDropdown, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_ThemeDropdown, -24 );
+lv_obj_set_y( ui_ThemeDropdown, -47 );
+lv_obj_set_align( ui_ThemeDropdown, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_ThemeDropdown, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
+ui_object_set_themeable_style_property(ui_ThemeDropdown, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_COLOR, _ui_theme_color_LABELTEXT);
+ui_object_set_themeable_style_property(ui_ThemeDropdown, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_LABELTEXT);
+ui_object_set_themeable_style_property(ui_ThemeDropdown, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_BG_COLOR, _ui_theme_color_DROPDOWNBG);
+ui_object_set_themeable_style_property(ui_ThemeDropdown, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_BG_OPA, _ui_theme_alpha_DROPDOWNBG);
+lv_obj_set_style_border_width(ui_ThemeDropdown, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_left(ui_ThemeDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_right(ui_ThemeDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_top(ui_ThemeDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_bottom(ui_ThemeDropdown, 7, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 
 
@@ -208,6 +208,6 @@ lv_obj_add_event_cb(ui_SaveLabel3, ui_event_SaveLabel3, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SaveButton3, ui_event_SaveButton3, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NextLabel3, ui_event_NextLabel3, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NextButton3, ui_event_NextButton3, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_Dropdown2, ui_event_Dropdown2, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_ThemeDropdown, ui_event_ThemeDropdown, LV_EVENT_ALL, NULL);
 
 }

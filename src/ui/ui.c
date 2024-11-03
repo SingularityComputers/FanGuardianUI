@@ -72,9 +72,9 @@ lv_obj_t *ui_ValueT2;
 lv_obj_t *ui_RPMT2;
 void ui_event_SettingsButton( lv_event_t * e);
 lv_obj_t *ui_SettingsButton;
-void ui_event_BackLabel3( lv_event_t * e);
-lv_obj_t *ui_BackLabel3;
-lv_obj_t *ui_Label1;
+void ui_event_SettingsLabel( lv_event_t * e);
+lv_obj_t *ui_SettingsLabel;
+lv_obj_t *ui_TapToSwitchLabel;
 // CUSTOM VARIABLES
 
 
@@ -192,8 +192,8 @@ void ui_event_NextButton3( lv_event_t * e);
 lv_obj_t *ui_NextButton3;
 void ui_event_NextLabel3( lv_event_t * e);
 lv_obj_t *ui_NextLabel3;
-void ui_event_Dropdown2( lv_event_t * e);
-lv_obj_t *ui_Dropdown2;
+void ui_event_ThemeDropdown( lv_event_t * e);
+lv_obj_t *ui_ThemeDropdown;
 lv_obj_t *ui_ColorThemeLabel;
 // CUSTOM VARIABLES
 
@@ -262,7 +262,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 }
 }
 
-void ui_event_BackLabel3( lv_event_t * e) {
+void ui_event_SettingsLabel( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
@@ -598,7 +598,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 }
 }
 
-void ui_event_Dropdown2( lv_event_t * e) {
+void ui_event_ThemeDropdown( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_VALUE_CHANGED) {

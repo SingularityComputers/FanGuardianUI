@@ -80,9 +80,9 @@ extern lv_obj_t *ui_ValueT2;
 extern lv_obj_t *ui_RPMT2;
 void ui_event_SettingsButton( lv_event_t * e);
 extern lv_obj_t *ui_SettingsButton;
-void ui_event_BackLabel3( lv_event_t * e);
-extern lv_obj_t *ui_BackLabel3;
-extern lv_obj_t *ui_Label1;
+void ui_event_SettingsLabel( lv_event_t * e);
+extern lv_obj_t *ui_SettingsLabel;
+extern lv_obj_t *ui_TapToSwitchLabel;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_LedSettingsScreen
@@ -197,8 +197,8 @@ void ui_event_NextButton3( lv_event_t * e);
 extern lv_obj_t *ui_NextButton3;
 void ui_event_NextLabel3( lv_event_t * e);
 extern lv_obj_t *ui_NextLabel3;
-void ui_event_Dropdown2( lv_event_t * e);
-extern lv_obj_t *ui_Dropdown2;
+void ui_event_ThemeDropdown( lv_event_t * e);
+extern lv_obj_t *ui_ThemeDropdown;
 extern lv_obj_t *ui_ColorThemeLabel;
 // CUSTOM VARIABLES
 
