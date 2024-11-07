@@ -72,7 +72,7 @@ public:
       cfg.i2c_addr = 0x38;
       cfg.pin_sda = 6;
       cfg.pin_scl = 5;
-      cfg.freq = 400000;
+      cfg.freq = 500000;
       cfg.x_min = 0;
       cfg.x_max = 320;
       cfg.y_min = 0;
@@ -94,6 +94,7 @@ extern uint8_t pump2_label_index;
 extern uint8_t temp1_label_index;
 extern uint8_t temp2_label_index;
 extern uint8_t background_image_index;
+extern uint8_t theme_index;
 extern bool flip_screen;
 extern LGFX tft;
 

@@ -215,6 +215,7 @@ void loadSettingsFromNVFlash() {
   temp1_label_index = preferences.getUChar("temp1_lbl_index", 0);
   temp2_label_index = preferences.getUChar("temp2_lbl_index", 0);
   background_image_index = preferences.getUChar("bg_img_index", 0);
+  theme_index = preferences.getUChar("theme_index", 0);
   preferences.end();
 }
 
@@ -311,6 +312,8 @@ void initGuiElements() {
   }
   lv_dropdown_set_selected(ui_BgDropdown, background_image_index);
   set_background_image(background_image_index);
+  lv_dropdown_set_selected(ui_ThemeDropdown, theme_index);
+  ui_theme_set(theme_index);
 }
 
 /* readTEMPs reads temperature values from thermistor */

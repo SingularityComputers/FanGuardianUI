@@ -19,6 +19,7 @@ uint8_t pump2_label_index = 0;
 uint8_t temp1_label_index = 0;
 uint8_t temp2_label_index = 0;
 uint8_t background_image_index = 0;
+uint8_t theme_index = 0;
 bool rgb_led_alert_enabled = false;
 bool flip_screen = false;
 uint16_t rgb_led_count = 32;
@@ -234,5 +235,17 @@ void SaveSettings(lv_event_t * e)
   preferences.begin("settings", false);
   preferences.putBool("flip_screen", flip_screen);
   preferences.putUChar("bg_img_index", background_image_index);
+  preferences.putUChar("theme_index", theme_index);
   preferences.end();
+}
+
+void theme_dropdown_change_event(lv_event_t * e)
+{
+  lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t * target = lv_event_get_target(e);
+
+  if (event_code == LV_EVENT_VALUE_CHANGED) {
+    theme_index = lv_dropdown_get_selected(target);
+    ui_theme_set(theme_index);
+  }
 }
