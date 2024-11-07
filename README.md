@@ -46,7 +46,8 @@ You can then flash the firmware to you display board using the following command
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/3901f1e0-2dd5-4fe1-bc60-bc20fc52e480">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/c0a94a56-c304-46ab-8abf-5b5296785111">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/67fb6e5a-02b6-4a7d-bf24-0e729ee2806c">
-<img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/6cfe4795-7ecd-45e0-a60a-d39081157bf8">
+<img width="420" alt="image" src="https://github.com/user-attachments/assets/3cd1d757-cc1c-4271-88b1-ae31d511494b">
+<img width="420" alt="image" src="https://github.com/user-attachments/assets/33c120e0-7448-4f0a-b064-a8feb1359a63">
 <img width="420" alt="image" src="https://github.com/SingularityComputers/FanGuardianUI/assets/165785169/4409b574-4593-43fc-87d2-3a76ee5cd14c">
 
 
