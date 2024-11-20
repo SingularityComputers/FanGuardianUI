@@ -503,11 +503,8 @@ lv_obj_add_event_cb(ui_Temp1LabelDropdown, ui_event_Temp1LabelDropdown, LV_EVENT
 lv_obj_add_event_cb(ui_Temp2LabelDropdown, ui_event_Temp2LabelDropdown, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Colorwheel2, ui_event_Colorwheel2, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_EnableLedAlert, ui_event_EnableLedAlert, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_NextLabel1, ui_event_NextLabel1, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NextButton1, ui_event_NextButton1, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_BackLabel2, ui_event_BackLabel2, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BackButton2, ui_event_BackButton2, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_SaveLabel2, ui_event_SaveLabel2, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SaveButton2, ui_event_SaveButton2, LV_EVENT_ALL, NULL);
 
 }

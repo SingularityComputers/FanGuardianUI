@@ -249,3 +249,54 @@ void theme_dropdown_change_event(lv_event_t * e)
     ui_theme_set(theme_index);
   }
 }
+
+void PWM1Change(lv_event_t *e) {
+  static uint8_t pwm1_percent = 0;
+  lv_obj_t *target = lv_event_get_target(e);
+  pwm1_percent = lv_arc_get_value(target);
+  if (pwm1_percent <= 20) {
+    pwm1_percent = 20;
+  }
+  PWMController(2, pwm1_percent);
+}
+
+void PWM2Change(lv_event_t *e) {
+  static uint8_t pwm2_percent = 0;
+  lv_obj_t *target = lv_event_get_target(e);
+  pwm2_percent = lv_arc_get_value(target);
+  if (pwm2_percent <= 20) {
+    pwm2_percent = 20;
+  }
+  PWMController(3, pwm2_percent);
+}
+
+void SaveFanPWMSettings(lv_event_t * e)
+{
+	// Your code here
+}
+
+void PWM1KeepMinimumValue(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t *target = lv_event_get_target(e);
+  uint8_t pwm_percent = lv_arc_get_value(target);
+  pwm_percent = lv_arc_get_value(target);
+  if (pwm_percent <= 20) {
+    pwm_percent = 20;
+    lv_arc_set_value(target, pwm_percent);
+  }
+  _ui_arc_set_text_value( ui_PWM1Percent, target, "", "%");
+}
+
+void PWM2KeepMinimumValue(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);
+  lv_obj_t *target = lv_event_get_target(e);
+  uint8_t pwm_percent = lv_arc_get_value(target);
+  pwm_percent = lv_arc_get_value(target);
+  if (pwm_percent <= 20) {
+    pwm_percent = 20;
+    lv_arc_set_value(target, pwm_percent);
+  }
+  _ui_arc_set_text_value( ui_PWM2Percent, target, "", "%");
+}

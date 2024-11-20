@@ -114,5 +114,7 @@ void toggle_visibility(bool show, int count, lv_obj_t* objs[]);
 void led_setting_screen_dynamic_ui_events();
 void set_screen_flip();
 void set_background_image(uint8_t bg_index);
+void sendUARTMessage(const String& message);
+void PWMController(uint8_t channel, uint8_t percent);
 
 #endif

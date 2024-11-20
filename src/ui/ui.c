@@ -20,12 +20,14 @@ lv_obj_t *ui_SCLogo;
 // SCREEN: ui_MainScreen
 void ui_MainScreen_screen_init(void);
 lv_obj_t *ui_MainScreen;
+void ui_event_PanelFan1( lv_event_t * e);
 lv_obj_t *ui_PanelFan1;
 lv_obj_t *ui_ArcFan1;
 lv_obj_t *ui_LabelFan1;
 lv_obj_t *ui_ValueFan1;
 lv_obj_t *ui_RPMFan1;
 lv_obj_t *ui_VoltagesLabel;
+void ui_event_PanelFan2( lv_event_t * e);
 lv_obj_t *ui_PanelFan2;
 lv_obj_t *ui_ArcFan2;
 lv_obj_t *ui_LabelFan2;
@@ -72,7 +74,6 @@ lv_obj_t *ui_ValueT2;
 lv_obj_t *ui_RPMT2;
 void ui_event_SettingsButton( lv_event_t * e);
 lv_obj_t *ui_SettingsButton;
-void ui_event_SettingsLabel( lv_event_t * e);
 lv_obj_t *ui_SettingsLabel;
 lv_obj_t *ui_TapToSwitchLabel;
 // CUSTOM VARIABLES
@@ -83,7 +84,6 @@ void ui_LedSettingsScreen_screen_init(void);
 lv_obj_t *ui_LedSettingsScreen;
 void ui_event_NextButton( lv_event_t * e);
 lv_obj_t *ui_NextButton;
-void ui_event_NextLabel( lv_event_t * e);
 lv_obj_t *ui_NextLabel;
 lv_obj_t *ui_RGBPanelTitle;
 lv_obj_t *ui_LEDEffectLabel;
@@ -108,11 +108,9 @@ void ui_event_TempSensorListDropdown( lv_event_t * e);
 lv_obj_t *ui_TempSensorListDropdown;
 void ui_event_BackButton( lv_event_t * e);
 lv_obj_t *ui_BackButton;
-void ui_event_BackLabel( lv_event_t * e);
 lv_obj_t *ui_BackLabel;
 void ui_event_SaveButton( lv_event_t * e);
 lv_obj_t *ui_SaveButton;
-void ui_event_SaveLabel( lv_event_t * e);
 lv_obj_t *ui_SaveLabel;
 lv_obj_t *ui_LEDSettingsScreenKB;
 // CUSTOM VARIABLES
@@ -157,15 +155,12 @@ void ui_event_EnableLedAlert( lv_event_t * e);
 lv_obj_t *ui_EnableLedAlert;
 void ui_event_NextButton1( lv_event_t * e);
 lv_obj_t *ui_NextButton1;
-void ui_event_NextLabel1( lv_event_t * e);
 lv_obj_t *ui_NextLabel1;
 void ui_event_BackButton2( lv_event_t * e);
 lv_obj_t *ui_BackButton2;
-void ui_event_BackLabel2( lv_event_t * e);
 lv_obj_t *ui_BackLabel2;
 void ui_event_SaveButton2( lv_event_t * e);
 lv_obj_t *ui_SaveButton2;
-void ui_event_SaveLabel2( lv_event_t * e);
 lv_obj_t *ui_SaveLabel2;
 lv_obj_t *ui_AlertSettingsScreenKB;
 // CUSTOM VARIABLES
@@ -181,16 +176,13 @@ void ui_event_FlipScreenCheckBox( lv_event_t * e);
 lv_obj_t *ui_FlipScreenCheckBox;
 void ui_event_BackButton4( lv_event_t * e);
 lv_obj_t *ui_BackButton4;
-void ui_event_BackLabel5( lv_event_t * e);
 lv_obj_t *ui_BackLabel5;
 lv_obj_t *ui_RGBPanel2Title2;
 void ui_event_SaveButton3( lv_event_t * e);
 lv_obj_t *ui_SaveButton3;
-void ui_event_SaveLabel3( lv_event_t * e);
 lv_obj_t *ui_SaveLabel3;
 void ui_event_NextButton3( lv_event_t * e);
 lv_obj_t *ui_NextButton3;
-void ui_event_NextLabel3( lv_event_t * e);
 lv_obj_t *ui_NextLabel3;
 void ui_event_ThemeDropdown( lv_event_t * e);
 lv_obj_t *ui_ThemeDropdown;
@@ -208,8 +200,35 @@ lv_obj_t *ui_GithubURLLabel;
 lv_obj_t *ui_Label3;
 void ui_event_BackButton1( lv_event_t * e);
 lv_obj_t *ui_BackButton1;
-void ui_event_BackLabel1( lv_event_t * e);
 lv_obj_t *ui_BackLabel1;
+// CUSTOM VARIABLES
+
+
+// SCREEN: ui_FanControllerScreen
+void ui_FanControllerScreen_screen_init(void);
+lv_obj_t *ui_FanControllerScreen;
+void ui_event_PWM1Arc( lv_event_t * e);
+lv_obj_t *ui_PWM1Arc;
+void ui_event_PWM2Arc( lv_event_t * e);
+lv_obj_t *ui_PWM2Arc;
+lv_obj_t *ui_PWM1Percent;
+lv_obj_t *ui_PWM2Percent;
+lv_obj_t *ui_PWM1MaxLabel;
+lv_obj_t *ui_PWM2MaxLabel;
+lv_obj_t *ui_PWM1ZeroLabel;
+lv_obj_t *ui_PWM1RPMValueLabel;
+lv_obj_t *ui_PWM2RPMValueLabel;
+void ui_event_BackButton5( lv_event_t * e);
+lv_obj_t *ui_BackButton5;
+lv_obj_t *ui_BackLabel4;
+void ui_event_SaveButton4( lv_event_t * e);
+lv_obj_t *ui_SaveButton4;
+lv_obj_t *ui_SaveLabel4;
+lv_obj_t *ui_PWM1LabelFan;
+lv_obj_t *ui_PWM2LabelFan;
+lv_obj_t *ui_PWM1AutoControl;
+lv_obj_t *ui_Container1;
+lv_obj_t *ui_PWM2AutoControl;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -236,6 +255,22 @@ if ( event_code == LV_EVENT_SCREEN_LOADED) {
 }
 }
 
+void ui_event_PanelFan1( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_FanControllerScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 250, 0, &ui_FanControllerScreen_screen_init);
+}
+}
+
+void ui_event_PanelFan2( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_FanControllerScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 250, 0, &ui_FanControllerScreen_screen_init);
+}
+}
+
 void ui_event_PanelAmbient1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
@@ -258,15 +293,7 @@ void ui_event_SettingsButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_LedSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_LedSettingsScreen_screen_init);
-}
-}
-
-void ui_event_SettingsLabel( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_LedSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_LedSettingsScreen_screen_init);
+      _ui_screen_change( &ui_LedSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 250, 0, &ui_LedSettingsScreen_screen_init);
 }
 }
 
@@ -274,15 +301,7 @@ void ui_event_NextButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AlertSettingsScreen_screen_init);
-}
-}
-
-void ui_event_NextLabel( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AlertSettingsScreen_screen_init);
+      _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 250, 0, &ui_AlertSettingsScreen_screen_init);
 }
 }
 
@@ -345,16 +364,7 @@ void ui_event_BackButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_MainScreen_screen_init);
-      SaveLedSettings( e );
-}
-}
-
-void ui_event_BackLabel( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_MainScreen_screen_init);
+      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 250, 0, &ui_MainScreen_screen_init);
 }
 }
 
@@ -363,14 +373,6 @@ void ui_event_SaveButton( lv_event_t * e) {
 
 if ( event_code == LV_EVENT_CLICKED) {
       SaveLedSettings( e );
-}
-}
-
-void ui_event_SaveLabel( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_MainScreen_screen_init);
 }
 }
 
@@ -490,15 +492,7 @@ void ui_event_NextButton1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_SettingsScreen_screen_init);
-}
-}
-
-void ui_event_NextLabel1( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_SettingsScreen_screen_init);
+      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 250, 0, &ui_SettingsScreen_screen_init);
 }
 }
 
@@ -506,27 +500,11 @@ void ui_event_BackButton2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_LedSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_LedSettingsScreen_screen_init);
-}
-}
-
-void ui_event_BackLabel2( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_LedSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_LedSettingsScreen_screen_init);
+      _ui_screen_change( &ui_LedSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 250, 0, &ui_LedSettingsScreen_screen_init);
 }
 }
 
 void ui_event_SaveButton2( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      SaveAlertSettings( e );
-}
-}
-
-void ui_event_SaveLabel2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
@@ -554,15 +532,7 @@ void ui_event_BackButton4( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AlertSettingsScreen_screen_init);
-}
-}
-
-void ui_event_BackLabel5( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AlertSettingsScreen_screen_init);
+      _ui_screen_change( &ui_AlertSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 250, 0, &ui_AlertSettingsScreen_screen_init);
 }
 }
 
@@ -574,27 +544,11 @@ if ( event_code == LV_EVENT_CLICKED) {
 }
 }
 
-void ui_event_SaveLabel3( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      SaveSettings( e );
-}
-}
-
 void ui_event_NextButton3( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_AboutScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AboutScreen_screen_init);
-}
-}
-
-void ui_event_NextLabel3( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_AboutScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_AboutScreen_screen_init);
+      _ui_screen_change( &ui_AboutScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 250, 0, &ui_AboutScreen_screen_init);
 }
 }
 
@@ -610,15 +564,51 @@ void ui_event_BackButton1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_SettingsScreen_screen_init);
+      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 250, 0, &ui_SettingsScreen_screen_init);
 }
 }
 
-void ui_event_BackLabel1( lv_event_t * e) {
+void ui_event_PWM1Arc( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+if ( event_code == LV_EVENT_RELEASED) {
+      PWM1Change( e );
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      PWM1KeepMinimumValue( e );
+}
+if ( event_code == LV_EVENT_PRESS_LOST) {
+      PWM1Change( e );
+}
+}
+
+void ui_event_PWM2Arc( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+if ( event_code == LV_EVENT_RELEASED) {
+      PWM2Change( e );
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      PWM2KeepMinimumValue( e );
+}
+if ( event_code == LV_EVENT_PRESS_LOST) {
+      PWM2Change( e );
+}
+}
+
+void ui_event_BackButton5( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);
 
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_SettingsScreen_screen_init);
+      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 250, 0, &ui_MainScreen_screen_init);
+}
+}
+
+void ui_event_SaveButton4( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+if ( event_code == LV_EVENT_CLICKED) {
+      SaveFanPWMSettings( e );
 }
 }
 
@@ -635,6 +625,7 @@ ui_LedSettingsScreen_screen_init();
 ui_AlertSettingsScreen_screen_init();
 ui_SettingsScreen_screen_init();
 ui_AboutScreen_screen_init();
+ui_FanControllerScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_LogoScreen);
 }

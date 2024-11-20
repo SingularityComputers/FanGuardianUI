@@ -89,3 +89,17 @@ void set_background_image(uint8_t bg_index) {
     lv_obj_set_style_bg_img_opa(screens[i], LV_OPA_COVER, LV_PART_MAIN);
   }
 }
+
+/* sendUARTMessage sends message over UART0 */
+void sendUARTMessage(const String& message) {
+  Serial0.println(message);
+  Serial.printf("DEBUG: %s sent\n", message);
+  Serial0.flush();
+}
+
+/* PWMController sets PWM duty cycle for the specified channel */
+void PWMController(uint8_t channel, uint8_t percent) {
+    char message[20];
+    sprintf(message, "#WPWM,%d,%d", channel, percent);
+    sendUARTMessage(message);
+}

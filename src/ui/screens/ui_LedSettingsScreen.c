@@ -367,7 +367,6 @@ lv_obj_set_style_border_side(ui_LEDSettingsScreenKB, LV_BORDER_SIDE_FULL, LV_PAR
 lv_obj_set_style_text_color(ui_LEDSettingsScreenKB, lv_color_hex(0x000000), LV_PART_ITEMS | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_LEDSettingsScreenKB, 255, LV_PART_ITEMS| LV_STATE_DEFAULT);
 
-lv_obj_add_event_cb(ui_NextLabel, ui_event_NextLabel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NextButton, ui_event_NextButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_LEDEffectDropdown, ui_event_LEDEffectDropdown, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NumOfLEDs, ui_event_NumOfLEDs, LV_EVENT_ALL, NULL);
@@ -375,9 +374,7 @@ lv_obj_add_event_cb(ui_RedSlider, ui_event_RedSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GreenSlider, ui_event_GreenSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BlueSlider, ui_event_BlueSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_TempSensorListDropdown, ui_event_TempSensorListDropdown, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_BackLabel, ui_event_BackLabel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BackButton, ui_event_BackButton, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_SaveLabel, ui_event_SaveLabel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SaveButton, ui_event_SaveButton, LV_EVENT_ALL, NULL);
 
 }
