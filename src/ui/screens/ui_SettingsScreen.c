@@ -55,6 +55,8 @@ ui_object_set_themeable_style_property(ui_FlipScreenCheckBox, LV_PART_MAIN| LV_S
 
 ui_object_set_themeable_style_property(ui_FlipScreenCheckBox, LV_PART_INDICATOR| LV_STATE_DEFAULT, LV_STYLE_BG_COLOR, _ui_theme_color_BUTTONBG);
 ui_object_set_themeable_style_property(ui_FlipScreenCheckBox, LV_PART_INDICATOR| LV_STATE_DEFAULT, LV_STYLE_BG_OPA, _ui_theme_alpha_BUTTONBG);
+lv_obj_set_style_border_color(ui_FlipScreenCheckBox, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT );
+lv_obj_set_style_border_opa(ui_FlipScreenCheckBox, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT);
 
 ui_BackButton4 = lv_btn_create(ui_SettingsScreen);
 lv_obj_set_width( ui_BackButton4, 100);
@@ -202,11 +204,8 @@ ui_object_set_themeable_style_property(ui_ColorThemeLabel, LV_PART_MAIN| LV_STAT
 
 lv_obj_add_event_cb(ui_BgDropdown, ui_event_BgDropdown, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_FlipScreenCheckBox, ui_event_FlipScreenCheckBox, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_BackLabel5, ui_event_BackLabel5, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BackButton4, ui_event_BackButton4, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_SaveLabel3, ui_event_SaveLabel3, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SaveButton3, ui_event_SaveButton3, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_NextLabel3, ui_event_NextLabel3, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NextButton3, ui_event_NextButton3, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_ThemeDropdown, ui_event_ThemeDropdown, LV_EVENT_ALL, NULL);
 

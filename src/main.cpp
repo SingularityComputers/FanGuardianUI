@@ -66,7 +66,6 @@ lv_obj_t *ui_rpm_labels[NUMBER_OF_FANS];
 void initDisplay();
 void initLED();
 void nonBlockingDelay(uint8_t delayIndex, unsigned long delayTime, void (*functionToRun)());
-void sendUARTMessage(const String& message);
 void core0Task(void *parameter);
 void core1Task(void *parameter);
 void uartTask(void *parameter);
@@ -375,8 +374,10 @@ void screenUpdater() {
   }
 
   lv_label_set_text_fmt(ui_ValueFan1, "%d", fanRPMs[0]);
+  lv_label_set_text_fmt(ui_PWM1RPMValueLabel, "%d\nRPM", fanRPMs[0]);
   lv_arc_set_value(ui_ArcFan1, fanRPMs[0]);
   lv_label_set_text_fmt(ui_ValueFan2, "%d", fanRPMs[1]);
+  lv_label_set_text_fmt(ui_PWM2RPMValueLabel, "%d\nRPM", fanRPMs[1]);
   lv_arc_set_value(ui_ArcFan2, fanRPMs[1]);
   lv_label_set_text_fmt(ui_ValueFan3, "%d", fanRPMs[2]);
   lv_arc_set_value(ui_ArcFan3, fanRPMs[2]);
@@ -494,13 +495,6 @@ void readVoltages() {
     voltages[1] = ina_0.getVoltage(INA3221_CH2);
     voltages[2] = ina_0.getVoltage(INA3221_CH3);
   }
-}
-
-/* sendUARTMessage sends message over UART0 */
-void sendUARTMessage(const String& message) {
-  Serial0.println(message);
-  Serial.printf("DEBUG: %s sent\n", message);
-  Serial0.flush();
 }
 
 /* rpmWatcher watches the fan RPM values and alerts */

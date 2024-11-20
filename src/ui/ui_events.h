@@ -28,6 +28,11 @@ void bg_dropdown_change_event(lv_event_t * e);
 void flip_screen_cb_change_event(lv_event_t * e);
 void SaveSettings(lv_event_t * e);
 void theme_dropdown_change_event(lv_event_t * e);
+void PWM1Change(lv_event_t * e);
+void PWM1KeepMinimumValue(lv_event_t * e);
+void PWM2Change(lv_event_t * e);
+void PWM2KeepMinimumValue(lv_event_t * e);
+void SaveFanPWMSettings(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/
