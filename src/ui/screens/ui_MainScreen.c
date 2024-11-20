@@ -767,9 +767,10 @@ lv_obj_set_style_text_color(ui_TapToSwitchLabel, lv_color_hex(0xBBBBBB), LV_PART
 lv_obj_set_style_text_opa(ui_TapToSwitchLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_TapToSwitchLabel, &lv_font_montserrat_12, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+lv_obj_add_event_cb(ui_PanelFan1, ui_event_PanelFan1, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_PanelFan2, ui_event_PanelFan2, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_PanelAmbient1, ui_event_PanelAmbient1, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_PanelAmbient2, ui_event_PanelAmbient2, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_SettingsLabel, ui_event_SettingsLabel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SettingsButton, ui_event_SettingsButton, LV_EVENT_ALL, NULL);
 
 }
