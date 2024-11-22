@@ -55,6 +55,8 @@ ui_object_set_themeable_style_property(ui_FlipScreenCheckBox, LV_PART_MAIN| LV_S
 
 ui_object_set_themeable_style_property(ui_FlipScreenCheckBox, LV_PART_INDICATOR| LV_STATE_DEFAULT, LV_STYLE_BG_COLOR, _ui_theme_color_BUTTONBG);
 ui_object_set_themeable_style_property(ui_FlipScreenCheckBox, LV_PART_INDICATOR| LV_STATE_DEFAULT, LV_STYLE_BG_OPA, _ui_theme_alpha_BUTTONBG);
+lv_obj_set_style_border_color(ui_FlipScreenCheckBox, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT );
+lv_obj_set_style_border_opa(ui_FlipScreenCheckBox, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT);
 
 ui_BackButton4 = lv_btn_create(ui_SettingsScreen);
 lv_obj_set_width( ui_BackButton4, 100);
@@ -171,7 +173,7 @@ ui_object_set_themeable_style_property(ui_NextLabel3, LV_PART_MAIN| LV_STATE_DEF
 ui_object_set_themeable_style_property(ui_NextLabel3, LV_PART_MAIN| LV_STATE_DEFAULT, LV_STYLE_TEXT_OPA, _ui_theme_alpha_TEXT);
 
 ui_ThemeDropdown = lv_dropdown_create(ui_SettingsScreen);
-lv_dropdown_set_options( ui_ThemeDropdown, "DEFAULT\nFIREY\nWATERY" );
+lv_dropdown_set_options( ui_ThemeDropdown, "DEFAULT\nWARM\nCOOL" );
 lv_obj_set_width( ui_ThemeDropdown, 162);
 lv_obj_set_height( ui_ThemeDropdown, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_ThemeDropdown, -24 );
