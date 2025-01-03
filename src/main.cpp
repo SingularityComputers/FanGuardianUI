@@ -7,7 +7,7 @@
 #include <FastLED.h>
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
-#include <INA3221.h>
+#include <Adafruit_INA3221.h>
 
 // RGB led driver pin
 #define LED_PIN 10
@@ -51,7 +51,7 @@ volatile float temps[4] = {0.0,0.0,0.0,0.0};
 volatile bool newUARTData = false;
 String receivedData = "";
 Adafruit_ADS1115 ads;
-INA3221 ina_0(INA3221_ADDR40_GND);
+Adafruit_INA3221 ina3221;
 
 // LVGL variables
 LGFX tft;
@@ -158,9 +158,12 @@ void setup() {
   ads.setGain(GAIN_ONE);
 
   // Initialize INA3221
-  ina_0.begin(&Wire);
-  ina_0.reset();
-  ina_0.setShuntRes(100, 100, 100);
+  ina3221.begin(0x40, &Wire);
+  ina3221.reset();
+  ina3221.setAveragingMode(INA3221_AVG_16_SAMPLES);
+  for (uint8_t i = 0; i < 3; i++) {
+    ina3221.setShuntResistance(i, 100);
+  }
 
   // Initialize WS2812B
   initLED();
@@ -490,9 +493,9 @@ void readRPMs() {
 /* readVoltages reads voltage measurement from the 3 channels */
 void readVoltages() {
   if (!isADSFailed) {
-    voltages[0] = ina_0.getVoltage(INA3221_CH1);
-    voltages[1] = ina_0.getVoltage(INA3221_CH2);
-    voltages[2] = ina_0.getVoltage(INA3221_CH3);
+    voltages[0] = ina3221.getBusVoltage(0);
+    voltages[1] = ina3221.getBusVoltage(1);
+    voltages[2] = ina3221.getBusVoltage(2);
   }
 }
 
